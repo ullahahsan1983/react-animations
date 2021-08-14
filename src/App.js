@@ -1,9 +1,10 @@
+import React from "react";
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import './App.css';
 import Main from './layout/Main';
 
-function App() {
+const App = () => {
   return (
     <div className="app">
       <Header />
