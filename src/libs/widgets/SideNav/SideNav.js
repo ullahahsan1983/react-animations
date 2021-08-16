@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Nav, ListGroup } from "react-bootstrap";
 
 const SubMenu = (props) => {
@@ -9,19 +9,24 @@ const SubMenu = (props) => {
   );
 };
 
-const SideNavItem = ({index, caption, onNavigate, ...props}) => {
-  const onClick = () => onNavigate(index);
+const SideNavItem = ({itemkey, caption, onNavigate, ...props}) => {
+  const onClick = () => onNavigate(itemkey);
   return (
-    <ListGroup.Item action onClick={onClick} eventKey={index+1} {...props}>{caption}</ListGroup.Item>
+    <ListGroup.Item action onClick={onClick} eventKey={itemkey} {...props}>{caption}</ListGroup.Item>
   );
 }
 
 const SideNav = (props)  => {
+  const [activeKey, setActiveKey] = useState(0);
+  const onNavigate = (index) => { 
+    setActiveKey(index);
+    props.onNavigate(index);
+  };
   const items = props.items.map((item, index) => (
-    <SideNavItem key={index} index={index} variant={props.itemVariant} onNavigate={props.onNavigate} {...item} />
+    <SideNavItem key={index} variant={props.itemVariant} itemkey={index} caption={item.caption} onNavigate={onNavigate} />
   ));
   return (
-    <ListGroup variant={props.variant} className="flex-column side-nav" activeKey="1" style={props.style}>
+    <ListGroup variant={props.variant} className="flex-column side-nav" activeKey={activeKey} style={props.style}>
         {items}
     </ListGroup>
   );

@@ -7,7 +7,7 @@ import Female from "./images/female-avatar.png";
 const ExampleFlip = ()  => {
   return (
     <>
-    <Row style={{display: 'flex'}}>
+    <Row>
       <Col>
         <Figure style={{width: '200px'}}>
           <Flip width='200px' height='200px'>
@@ -22,6 +22,11 @@ const ExampleFlip = ()  => {
             Quick Flip        
           </Figure.Caption>
         </Figure>
+      </Col>
+      <Col>
+        <code>
+          Coming soon
+        </code>
       </Col>
     </Row>
     <Row>
@@ -39,6 +44,11 @@ const ExampleFlip = ()  => {
             Swing Flip        
           </Figure.Caption>
         </Figure>
+      </Col>
+      <Col>
+        <code>
+          Coming soon
+        </code>
       </Col>
     </Row>
     </>

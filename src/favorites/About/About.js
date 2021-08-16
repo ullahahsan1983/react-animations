@@ -32,17 +32,18 @@ const MyProfile = () => {
   );
 }
 
-const About = () => {
+const About = (props) => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   const backdrop = false;
+  const className = `about-anchor ${props.variant || 'modern'}`;
 
   return (
     <>
-      <Button onClick={handleShow} variant="info" className="about-anchor">
+      <Button onClick={handleShow} variant="info" className={className}>
         About
       </Button>
       <Offcanvas 

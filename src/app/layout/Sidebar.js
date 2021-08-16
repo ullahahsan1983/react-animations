@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import SideNav from "../../libs/widgets/SideNav/SideNav";
-import ExampleFlip from "../examples/ExampleFlip";
+import ExampleCollection from "../examples/ExampleCollection";
 
 const Sidebar = (props)  => {
-  const [items] = useState([
-    { caption: "Flip Example", content: <ExampleFlip /> },
-    { caption: "Example 2", content: <div /> },
-    { caption: "Example 3", content: <div /> },
-  ]);
+  const items = Object.keys(ExampleCollection).map((key, index) =>
+  {
+    return { navKey: key, caption: `${key} Example` };
+  });
 
-  const onNavigate = (idx) => props.onNavigate(items[idx].content);
+  const onNavigate = (idx) => props.onNavigate(items[idx].navKey);
 
   return (
     <div className="sidebar">

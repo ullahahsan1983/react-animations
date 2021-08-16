@@ -1,21 +1,11 @@
-import { Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
-import Sidebar from './Sidebar';
+import React from "react";
 import ExampleContainer from './ExampleContainer';
-import About from "../../favorites/About/About";
 
-const Main = (props)  => {
-  const [example, selectExample] = useState();
+const Main = (props)  => {  
   return (
-    <Container fluid className="main">
-      <Sidebar onNavigate={(e) => selectExample(e)} />
-      <ExampleContainer>
-        <Row>
-          <Col>{example}</Col>
-        </Row>
-      </ExampleContainer>
-      <About />
-    </Container>
+    <div className="main"> 
+      <ExampleContainer example={props.example} /> 
+    </div>
   );
 }
 
