@@ -1,16 +1,16 @@
 import React from "react";
 import { Image, Row, Col, Figure } from "react-bootstrap";
-import Flip from "../components/transitions/Flip/Flip";
+import Flip from "../../libs/transitions/Flip/Flip";
 import Male from "./images/male-avatar.png";
 import Female from "./images/female-avatar.png";
-import FigureCaption from "react-bootstrap/esm/FigureCaption";
 
 const ExampleFlip = ()  => {
   return (
+    <>
     <Row style={{display: 'flex'}}>
       <Col>
         <Figure style={{width: '200px'}}>
-          <Flip  style={{width: '200px', height: '200px'}} >
+          <Flip width='200px' height='200px'>
             <Flip.Front>
               <Image src={Male} thumbnail />
             </Flip.Front>
@@ -23,9 +23,11 @@ const ExampleFlip = ()  => {
           </Figure.Caption>
         </Figure>
       </Col>
+    </Row>
+    <Row>
       <Col>
         <Figure style={{width: '300px'}}>
-          <Flip swing style={{width: '300px', height: '300px'}}>
+          <Flip swing width='300px' height='300px'>
             <Flip.Front>
               <Image src={Female} thumbnail /> 
             </Flip.Front>
@@ -39,6 +41,7 @@ const ExampleFlip = ()  => {
         </Figure>
       </Col>
     </Row>
+    </>
   );
 }
 

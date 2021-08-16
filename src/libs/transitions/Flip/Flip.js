@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './Flip.css';
 
 const FlipFront = (props) => {
@@ -18,7 +18,12 @@ const FlipBack = (props) => {
 }
 
 const Flip = (props)  => {
-  const [style, setStyle] = useState({perspective: props.swing ? '1000px' : '0', ...props.style});
+  const style = {
+    width: props.width,
+    height: props.height,
+    perspective: props.swing ? '1000px' : '0'
+  };
+  
   return (
     <div className='flip' style={style}>
       <div className='flip-inner'>

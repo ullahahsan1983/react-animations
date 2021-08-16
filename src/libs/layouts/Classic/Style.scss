@@ -1,0 +1,19 @@
+@import '../_layout';
+
+.layout.classic {
+  @extend %flex-c;
+  height: 100vh;
+
+  .header-section, .footer-section {
+    @extend .full-w;
+  }
+
+  .mid-section {
+    @extend %flex-r, .full;
+    
+  }
+
+  .main-section {
+    @extend %flex-c, .full;
+  }
+}

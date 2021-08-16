@@ -4,7 +4,7 @@ import Topbar from "./Topbar";
 const Header = ()  => {
   return (
     <header className="header">
-        <Topbar />      
+      <Topbar />
     </header>
   );
 }

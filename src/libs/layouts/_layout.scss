@@ -1,0 +1,31 @@
+%flex {
+  display: flex;
+  &-c{
+    @extend %flex;
+    flex-direction: column;
+  }
+  &-r{
+    @extend %flex;
+    flex-direction: row;
+  }
+}
+
+.flex-c {
+  @extend %flex-c;
+}
+
+.flex-r {
+  @extend %flex-r;
+}
+
+.full-w {
+  width: 100%;
+}
+
+.full-h {
+  height: 100%;
+}
+
+.full {
+  @extend .full-h, .full-w;
+}

@@ -1,8 +1,10 @@
-.app {
+.App {
   text-align: center;
+  background: linear-gradient(90deg, #6c757d, transparent);
+  height: 100vh;
 }
 
-.app-logo {
+.App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -13,7 +15,7 @@
   }
 }
 
-.app-header {
+.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -24,15 +26,40 @@
   color: white;
 }
 
-.app-link {
-  color: #61dafb;
-}
-
-@keyframes app-logo-spin {
+@keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
+}
+
+header {
+  height: 50px;
+}
+
+footer {
+  height: 30px;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar {
+  width: 300px;
+  padding-right: 0;
+}
+
+.example-container {
+  padding: 20px;
+  background: #636464;
+  width: 100%;
+}
+
+.example-container figcaption {
+  color: antiquewhite;
 }

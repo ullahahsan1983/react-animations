@@ -1,0 +1,22 @@
+@import '../_layout';
+
+.layout.modern {
+  @extend %flex-r;
+  height: 100vh;
+
+  .left-section, .right-section {
+    @extend .flex-c, .full-h;
+  }
+
+  .mid-section {
+    @extend %flex-c, .full;    
+  }
+
+  .header-section, .footer-section {
+    @extend .full-w;
+  }
+
+  .main-section {
+    @extend %flex-r, .full;
+  }
+}
