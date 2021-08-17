@@ -10,9 +10,10 @@ const Sidebar = (props)  => {
 
   const onNavigate = (idx) => props.onNavigate(items[idx].navKey);
 
+  const className = `sidebar ${props.right ? 'right' : 'left'}`;
   return (
-    <div className="sidebar">
-      <SideNav items={items} variant="flush" itemVariant="light" onNavigate={onNavigate}></SideNav>
+    <div className={className}>
+      <SideNav items={items} itemVariant="light" onNavigate={onNavigate}></SideNav>
     </div>
   );
 }

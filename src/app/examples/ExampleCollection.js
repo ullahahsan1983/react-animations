@@ -1,11 +1,11 @@
 import React from "react";
-import UnderConstruction from "../layout/UnderConstruction";
+import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
 import ExampleFlip from "./ExampleFlip";
 
 const ExampleCollection = {
   'Flip': ExampleFlip,
-  'Slide': UnderConstruction,
-  'Pop Out': UnderConstruction,
+  'Slide': WorkInProgress,
+  'Pop Out': WorkInProgress,
 };
 
 export default ExampleCollection;

@@ -52,49 +52,20 @@ footer {
 .sidebar {
   width: 300px;
   height: 100%;
-}
-
-.sidebar.left {
-  padding-right: 0;
-  padding-left: 20px;
-}
-
-.sidebar.right {
-  padding-right: 0;
-  padding-left: 0;
+  padding: 0 20px 0px 20px;
 }
 
 .example-container {
-  padding: 20px;
-  padding-top: 0;
-  background: #636464;
+  background: #fefefe;
   width: 100%;
-  color: antiquewhite;
-}
-
-.example-container figcaption {
-  color: antiquewhite;
+  color: #636464;
+  border: 20px solid;
+  border-radius: 5px;
+  border-color: #636464;
 }
 
 .example-container .row {
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 2px solid;
-}
-
-.under-construction {
-  background: wheat;
-  margin: 20px;
-  text-align: center;
-  justify-content: center;
-  color: coral;
-}
-
-.under-construction span {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 100%;
 }

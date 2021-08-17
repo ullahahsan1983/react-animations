@@ -4,9 +4,9 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import Sidebar from "./layout/Sidebar";
 import Main from './layout/Main';
-import UnderConstruction from "./layout/UnderConstruction";
 
 import './App.css';
+import WorkInProgress from "../favorites/WorkInProgress/WorkInProgress";
 
 const App = () => {
   const [example, selectExample] = useState();
@@ -15,7 +15,7 @@ const App = () => {
     <LayoutProvider className="App" variant="classic">
       <LayoutProvider.Section name="header"><Header /></LayoutProvider.Section>
       <LayoutProvider.Section name="left">
-        <Sidebar onNavigate={(e) => selectExample(e) } />
+        <Sidebar left onNavigate={(e) => selectExample(e) } />
       </LayoutProvider.Section>
       <LayoutProvider.Section name="main">
         <Main example={example} />
@@ -24,7 +24,9 @@ const App = () => {
         <Footer />
       </LayoutProvider.Section>
       <LayoutProvider.Section name="right">
-        <UnderConstruction />
+        <div className="sidebar right">
+          <WorkInProgress variant="under-construction" banner vertical/>
+        </div>
       </LayoutProvider.Section>
     </LayoutProvider>
   );

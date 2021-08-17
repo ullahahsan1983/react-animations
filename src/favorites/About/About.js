@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Offcanvas, Button, Image } from 'react-bootstrap';
 import Avatar from './Avatar.png';
-import './About.css';
+import './Style.css';
 
 const MyProfile = () => {
   return (
