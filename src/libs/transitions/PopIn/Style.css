@@ -1,0 +1,65 @@
+.popin-container {
+  position: relative;
+  perspective: 600px;
+}
+
+.popin-container-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.popin-container:hover .popin-container-inner {
+  opacity: 1;
+}
+
+.popin-container.bottom {
+  transform-origin: bottom center 0;
+}
+
+.popin-container.bottom .popin-container-inner {
+  bottom: 0;
+  transform: rotateX(90deg) translateZ(-125px) translateY(-50%);
+}
+
+.popin-container.bottom:hover .popin-container-inner {
+  transform: rotateX(0deg);
+}
+
+.popin-container.top {
+  transform-origin: top center 0;
+}
+
+.popin-container.top .popin-container-inner {
+  transform: rotateX(-90deg) translateZ(-125px) translateY(50%);
+}
+
+.popin-container.top:hover .popin-container-inner {
+  transform: rotateX(0deg);
+}
+
+.popin-container.left {
+  transform-origin: left center 0;
+}
+
+.popin-container.left .popin-container-inner {  
+  transform: translateX(-50%) translateZ(-125px) rotateY(90deg);
+}
+
+.popin-container.left:hover .popin-container-inner {
+  transform: rotateY(0deg);
+}
+
+.popin-container.right {
+  transform-origin: right center 0;
+}
+
+.popin-container.right .popin-container-inner {  
+  transform: translateX(50%) translateZ(-125px) rotateY(-90deg);
+}
+
+.popin-container.right:hover .popin-container-inner {
+  transform: rotateY(0deg);
+}
