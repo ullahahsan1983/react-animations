@@ -2,8 +2,16 @@ import React from "react";
 import * as utils from "../../utils";
 import "./Style.css";
 
-const LeftSection = ({ children, name, className, ...props}) => {
-  const classes = `split-section ${name} ` + (className ? className : '');
+const SectionTitle = (props) => {
+  return (
+    <div className="split-section-title">
+      <span>{props.children}</span>
+    </div>
+  );
+}
+
+const LeftSection = ({ children, className, ...props}) => {
+  const classes = `split-section left ` + (className ? className : '');
   return (
     <div className={classes} {...props}>
       {children}
@@ -11,25 +19,17 @@ const LeftSection = ({ children, name, className, ...props}) => {
   );
 }
 
-LeftSection.defaultProps = {
-  name: 'left'
-};
-
-const RightSection = ({ children, name, className, ...props}) => {
-  const classes = `split-section ${name} ` + (className ? className : '');
+const RightSection = ({ children, className, ...props}) => {
+  const classes = `split-section right ${className ? className : ''}`;
   return (
     <div className={classes} {...props}>
       {children}
     </div>
   );
 }
-
-RightSection.defaultProps = {
-  name: 'right'
-};
 
 const SplitPanel = ({ children, className, ...props }) => {
-  const classes = `split-panel ` + (className ? className : '');
+  const classes = `split-panel ${className ? className : ''}`;
   const left = utils.findChildrenByType(children, "LeftSection");
   const right = utils.findChildrenByType(children, "RightSection");
   return (
@@ -45,5 +45,6 @@ const SplitPanel = ({ children, className, ...props }) => {
 
 export default Object.assign(SplitPanel, {
   Left: LeftSection,
-  Right: RightSection
+  Right: RightSection,
+  SectionTitle: SectionTitle
 });

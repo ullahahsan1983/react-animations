@@ -11,4 +11,33 @@
   display: flex;
   flex-direction: row;
   width: 50%;
+  position: relative;
+  border: 1px solid gray;
+}
+
+.split-section-title {
+  position: absolute;
+  height: 100%;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 20px;
+  color: white;
+  background: gray;
+  white-space: nowrap;
+}
+
+.split-section-title span {
+  transform: rotate(-90deg);
+  display: block;
+  margin: auto -50%;
+}
+
+.split-section.right .split-section-title {
+  right: 0;
+}
+
+.split-section.left .split-section-title {
+  left: 0;
 }
