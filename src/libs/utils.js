@@ -18,8 +18,7 @@ const findNamedVariant = (src, name) => {
   return ensureArray(src).find(e => e.props && e.props.name === name);
 }
 
-const findChildrenByType = (src, typeName, sequence = null) => {
-  sequence = sequence ?? 1;
+const findChildrenByType = (src, typeName, sequence = 1) => {
   return ensureArray(src).filter(e => e.type && e.type.name === typeName)[sequence - 1];
 }
 

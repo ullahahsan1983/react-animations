@@ -25,7 +25,6 @@ const ExampleItem = ({children, ...props}) => {
   const demo2 = utils.findChildrenByType(children, "Demonstration", 2);
   const tryIt = utils.findChildrenByType(children, "TryIt");
 
-  //console.log(demo1, demo2, tryIt);
   const mode = demo1 && demo2 ? 'compare' : (demo1 && tryIt ? 'tryit' : 'single');
 
   let template;
