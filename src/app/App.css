@@ -1,6 +1,8 @@
+@import '../libs/skin/skin.css';
+
 .App {
   text-align: center;
-  background: linear-gradient(90deg, #6c757d, transparent);
+  background: linear-gradient(-90deg, #6c757d, transparent);
   height: 100vh;
 }
 
@@ -62,10 +64,11 @@ footer {
   border: 20px solid;
   border-radius: 5px;
   border-color: #636464;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-.example-container .row {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid;
+.example-container .demo-content {
+  display: flex;
+  justify-content: center;
 }
