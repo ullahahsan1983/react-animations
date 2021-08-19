@@ -1,0 +1,49 @@
+.flip.swing, .flip.slide {
+  perspective: 600px;
+}
+
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.flip-front, .flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* transition */
+.flip.slide .flip-inner {
+  transform-origin: center right;
+}
+.flip.vertical.slide .flip-inner {
+  transform-origin: center bottom;
+}
+
+.flip.hover:hover .flip-inner, .flip.click.clicked .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip.vertical.hover:hover .flip-inner, .flip.vertical.click.clicked .flip-inner{
+  transform: rotateX(180deg);
+}
+
+.flip.slide.hover:hover .flip-inner, .flip.slide.click.clicked .flip-inner {
+  transform: translateX(-100%) rotateY(180deg);
+}
+.flip.vertical.slide.hover:hover .flip-inner, .flip.vertical.slide.click.clicked .flip-inner {
+  transform: translateY(-100%) rotateX(180deg);
+}
+
+/* transition revert */
+.flip-back {
+  transform: rotateY(180deg);
+}
+.flip-back.vertical {
+  transform: rotateX(180deg) rotateZ(180deg);
+}
