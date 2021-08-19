@@ -10,7 +10,7 @@
 
   .mid-section {
     @extend %flex-r, .full;
-    
+    overflow: hidden;
   }
 
   .main-section {
