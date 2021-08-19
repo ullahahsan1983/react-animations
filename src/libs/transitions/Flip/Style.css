@@ -44,6 +44,6 @@
 .flip-back {
   transform: rotateY(180deg);
 }
-.flip-back.vertical {
-  transform: rotateX(180deg) rotateZ(180deg);
+.flip.vertical .flip-back {
+  transform: rotateX(180deg);
 }
