@@ -1,16 +1,16 @@
 import React from "react";
-import { Image, Row, Col, Figure } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import Flip from "../../libs/transitions/Flip/Flip";
 import Male from "./images/male-avatar.png";
 import Female from "./images/female-avatar.png";
+import ExampleModule from "./ExampleModule";
 
 const ExampleFlip = ()  => {
-  return (
-    <>
-    <Row>
-      <Col>
-        <Figure style={{width: '200px'}}>
-          <Flip width='200px' height='200px'>
+  return (    
+    <ExampleModule>
+      <ExampleModule.Item title="Flat Flip" description="Hover over image to see the effect">
+        <ExampleModule.Item.Demo>
+          <Flip variant="flat" width='250px' height='250px'>
             <Flip.Front>
               <Image src={Male} thumbnail />
             </Flip.Front>
@@ -18,40 +18,91 @@ const ExampleFlip = ()  => {
               <Image src={Female} thumbnail /> 
             </Flip.Back>
           </Flip>
-          <Figure.Caption>
-            Quick Flip        
-          </Figure.Caption>
-        </Figure>
-      </Col>
-      <Col>
-        <code>
-          Coming soon
-        </code>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        <Figure style={{width: '300px'}}>
-          <Flip swing width='300px' height='300px'>
+        </ExampleModule.Item.Demo>
+        <ExampleModule.Item.Demo>
+          <Flip variant="flat" vertical width='250px' height='250px'>
             <Flip.Front>
-              <Image src={Female} thumbnail /> 
+              <Image src={Male} thumbnail />
             </Flip.Front>
             <Flip.Back>
-              <Image src={Male} thumbnail /> 
+              <Image src={Female} thumbnail /> 
             </Flip.Back>
           </Flip>
-          <Figure.Caption>
-            Swing Flip        
-          </Figure.Caption>
-        </Figure>
-      </Col>
-      <Col>
-        <code>
-          Coming soon
-        </code>
-      </Col>
-    </Row>
-    </>
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+
+      <ExampleModule.Item title="Swing Flip" description="Hover over image to see the effect">
+        <ExampleModule.Item.Demo>
+          <Flip variant="swing" width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+
+        <ExampleModule.Item.Demo>
+          <Flip variant="swing" vertical width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+      
+      <ExampleModule.Item title="Slide Flip" description="Hover over image to see the effect">
+        <ExampleModule.Item.Demo>
+          <Flip variant="slide" width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+
+        <ExampleModule.Item.Demo>
+          <Flip variant="slide" vertical width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+      
+      <ExampleModule.Item title="Slide on Click" description="Click on image to see the effect">
+        <ExampleModule.Item.Demo>
+          <Flip variant="slide" event="click" width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+
+        <ExampleModule.Item.Demo>
+          <Flip variant="slide" vertical event="click" width='250px' height='250px'>
+            <Flip.Front>
+              <Image src={Male} thumbnail />
+            </Flip.Front>
+            <Flip.Back>
+              <Image src={Female} thumbnail /> 
+            </Flip.Back>
+          </Flip>
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+    </ExampleModule>       
   );
 }
 
