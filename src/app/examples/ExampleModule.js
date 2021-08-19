@@ -35,9 +35,15 @@ const ExampleItem = ({children, ...props}) => {
       template = 
       <SplitPanel>
         <SplitPanel.Left className="demo-content">
+          {demo1.props && demo1.props.title &&
+            <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
+          }
           {demo1}            
         </SplitPanel.Left>
         <SplitPanel.Right className="demo-content">
+          {demo2.props && demo2.props.title &&
+            <SplitPanel.SectionTitle>{demo2.props.title}</SplitPanel.SectionTitle>
+          }
           {demo2}
         </SplitPanel.Right>
       </SplitPanel>;
@@ -46,9 +52,15 @@ const ExampleItem = ({children, ...props}) => {
       template = 
       <SplitPanel>
         <SplitPanel.Left className="demo-content">
+          {demo1.props && demo1.props.title &&
+            <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
+          }
           {demo1 || <div>No content provided</div>}            
         </SplitPanel.Left>
         <SplitPanel.Right className="tryit">
+          {tryIt.props && tryIt.props.title &&
+            <SplitPanel.SectionTitle>{tryIt.props.title}</SplitPanel.SectionTitle>
+          }
           {tryIt || <WorkInProgress />}
         </SplitPanel.Right>
       </SplitPanel>;
