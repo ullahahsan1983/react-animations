@@ -1,0 +1,52 @@
+.movement.vertical {
+  -webkit-animation: vertical 1s infinite  alternate;
+  animation: vertical 1s infinite  alternate;
+}
+
+@keyframes vertical {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(150px); }
+}
+
+.movement.horizontal {
+  -webkit-animation: horizontal 2s infinite  alternate;
+  animation: horizontal 2s infinite  alternate;
+}
+
+@keyframes horizontal {
+  0% { transform: translateX(220px); }
+  100% { transform: translateX(-260px); }
+}
+
+.movement.diagonal {
+  -webkit-animation: diagonal 2s infinite  alternate;
+  animation: diagonal 2s infinite  alternate;
+}
+
+@keyframes diagonal {
+  0% { transform: translateX(-200px) translateY(0px); }
+  100% { transform: translateX(230px) translateY(200px); }
+}
+
+.movement.orthogonal {
+  -webkit-animation: orthogonal 2.5s infinite  alternate;
+  animation: orthogonal 2.5s infinite  alternate;
+}
+@keyframes orthogonal {
+  0% { transform: translateX(-240px) translateY(0); }
+  66% { transform: translateX(220px) translateY(0); }
+  100% { transform: translateX(220px) translateY(200px); }
+}
+
+.movement.box {
+  -webkit-animation: box 5s infinite normal;
+  animation: box 5s infinite normal;
+}
+
+@keyframes box {
+  0% { transform: translateX(220px) translateY(180px); }
+  32% { transform: translateX(-220px) translateY(180px); }
+  49% { transform: translateX(-220px) translateY(20px); }
+  83% { transform: translateX(220px) translateY(20px); }
+  100% { transform: translateX(220px) translateY(180px); }
+}
