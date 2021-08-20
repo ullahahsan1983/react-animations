@@ -7,7 +7,7 @@ import ExampleModule from "./ExampleModule";
 
 const ExampleFlip = ()  => {
   return (    
-    <ExampleModule>
+    <ExampleModule className="demo-transitions-flip">
       <ExampleModule.Item title="Flat Flip" description="Hover over image to see the effect">
         <ExampleModule.Item.Demo title="Horizontal">
           <Flip variant="flat" width='250px' height='250px'>

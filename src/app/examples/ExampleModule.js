@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import * as utils from "../../libs/utils";
-import { Row, Col, Card, CardGroup } from "react-bootstrap";
+import { Row, Col, Card, CardGroup, Button } from "react-bootstrap";
 import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
 import SplitPanel from "../../libs/widgets/SplitPanel/SplitPanel";
 
@@ -20,10 +20,16 @@ const TryIt = (props) => {
   );
 }
 
+const ActionBlock = (props) => {
+  return <>{props.children}</>;
+}
+
 const ExampleItem = ({children, ...props}) => {  
   const demo1 = utils.findChildrenByType(children, "Demonstration", 1);
   const demo2 = utils.findChildrenByType(children, "Demonstration", 2);
   const tryIt = utils.findChildrenByType(children, "TryIt");
+  const actionBlock1 = utils.findChildrenByType(children, "ActionBlock", 1);
+  const actionBlock2 = utils.findChildrenByType(children, "ActionBlock", 2);
 
   const mode = demo1 && demo2 ? 'compare' : (demo1 && tryIt ? 'tryit' : 'single');
 
@@ -69,12 +75,26 @@ const ExampleItem = ({children, ...props}) => {
       template = <SplitPanel className="demo-content">{demo1}</SplitPanel>;
       break;    
   }
+
+  const headerClass = `flex-r ${actionBlock1 || actionBlock2 ? 'justify-content-between' : 'justify-content-center'}`;
   
   return (
     <Row>
       <Col> 
         <Card>
-          <Card.Header as="h5">{props.title}</Card.Header>
+          <Card.Header className={headerClass}>
+            {actionBlock1 && 
+            <span className='example-actions left'>
+              {actionBlock1}     
+            </span>
+            }
+            <h5>{props.title}</h5>
+            {actionBlock2 && 
+            <span className='example-actions right'>
+              {actionBlock2}     
+            </span>
+            }
+          </Card.Header>
           <Card.Body>
             {props.description && <Card.Subtitle className="text-muted">{props.description}</Card.Subtitle>}
             {template}
@@ -85,17 +105,18 @@ const ExampleItem = ({children, ...props}) => {
   );
 }
 
-const ExampleModule = (props)  => {
+const ExampleModule = ({children, ...props})  => {
   return (
-    <>
-        {props.children}
-    </>
+    <div {...props}>
+        {children}
+    </div>
   );
 }
 
 export default Object.assign(ExampleModule, {
   Item: Object.assign(ExampleItem, {
     Demo: Demonstration,
-    TryIt: TryIt
+    TryIt: TryIt,
+    Actions: ActionBlock
   })
 });

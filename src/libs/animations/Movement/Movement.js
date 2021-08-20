@@ -2,7 +2,7 @@ import React from "react";
 import './Style.css';
 
 const Movement = ({className, style, children, ...props})  => {
-  const classState = `movement ${props.direction} ${className ? className : ''}`;
+  const classState = `movement ${props.play ? 'running' : 'paused'} ${props.direction} ${className ? className : ''}`;
 
   return (
     <div className={classState} style={style}>
@@ -12,7 +12,8 @@ const Movement = ({className, style, children, ...props})  => {
 }
 
 Movement.defaultProps = {
-  direction: 'vertical', // possible values: 'vertical', 'horizontal', 'diagonal', 'orthogonal'
+  play: true,
+  direction: 'vertical', // possible values: 'vertical', 'horizontal', 'diagonal', 'orthogonal', 'box', 'circle'
 };
 
 export default Movement;
