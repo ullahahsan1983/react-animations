@@ -1,10 +1,10 @@
-.movement {
+.motion {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.movement.running.vertical {
+.motion.running.vertical {
   -webkit-animation: vertical linear 1s infinite  alternate;
   animation: vertical linear 1s infinite  alternate;
 }
@@ -14,7 +14,7 @@
   100% { transform: translateY(75px); }
 }
 
-.movement.running.horizontal {
+.motion.running.horizontal {
   -webkit-animation: horizontal linear 1.8s infinite  alternate;
   animation: horizontal linear 1.8s infinite  alternate;
 }
@@ -24,7 +24,7 @@
   100% { transform: translateX(-260px); }
 }
 
-.movement.running.diagonal {
+.motion.running.diagonal {
   -webkit-animation: diagonal linear 2s infinite  alternate;
   animation: diagonal linear 2s infinite  alternate;
 }
@@ -34,7 +34,7 @@
   100% { transform: translateX(260px) translateY(100px); }
 }
 
-.movement.running.orthogonal {
+.motion.running.orthogonal {
   -webkit-animation: orthogonal linear 2.5s infinite  alternate;
   animation: orthogonal linear 2.5s infinite  alternate;
 }
@@ -44,7 +44,7 @@
   100% { transform: translateX(220px) translateY(100px); }
 }
 
-.movement.running.box {
+.motion.running.box {
   -webkit-animation: box linear 5s infinite normal;
   animation: box linear 5s infinite normal;
 }
@@ -55,4 +55,14 @@
   49% { transform: translateX(-220px) translateY(-100px); }
   83% { transform: translateX(260px) translateY(-100px); }
   100% { transform: translateX(260px) translateY(100px); }
+}
+
+.motion.running.circle {
+  -webkit-animation: circle linear 5s infinite;
+  animation: circle linear 5s infinite;
+}
+
+@keyframes circle {
+  0% { transform: rotate(0deg) translate(-165px) rotate(0deg); }
+  100% { transform: rotate(360deg) translate(-165px) rotate(-360deg); }
 }

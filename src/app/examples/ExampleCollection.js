@@ -1,14 +1,14 @@
 import React from "react";
 import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
-import ExampleFlip from "./ExampleFlip";
-import ExampleMovement from "./ExampleMovement";
-import ExamplePopIn from "./ExamplePopIn";
+import FlipExample from "./FlipExample";
+import MotionExample from "./MotionExample";
+import PopInExample from "./PopInExample";
 
 const ExampleCollection = {
-  'Flip': ExampleFlip,
+  'Flip': FlipExample,
   'Slide': WorkInProgress,
-  'PopIn': ExamplePopIn,
-  'Moving': ExampleMovement,
+  'PopIn': PopInExample,
+  'Motion': MotionExample,
 };
 
 export default ExampleCollection;

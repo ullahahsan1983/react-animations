@@ -5,7 +5,7 @@ import Male from "./images/male-avatar.png";
 import Female from "./images/female-avatar.png";
 import ExampleModule from "./ExampleModule";
 
-const ExamplePopIn = ()  => {
+const PopInExample = ()  => {
   return (    
     <ExampleModule>
       <ExampleModule.Item title="PopIn Vertical" description="Hover over the box to see the effect">
@@ -37,4 +37,4 @@ const ExamplePopIn = ()  => {
   );
 }
 
-export default ExamplePopIn;
+export default PopInExample;

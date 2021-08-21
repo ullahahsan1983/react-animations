@@ -25,11 +25,11 @@ const ActionBlock = (props) => {
 }
 
 const ExampleItem = ({children, ...props}) => {  
-  const demo1 = utils.findChildrenByType(children, "Demonstration", 1);
-  const demo2 = utils.findChildrenByType(children, "Demonstration", 2);
-  const tryIt = utils.findChildrenByType(children, "TryIt");
-  const actionBlock1 = utils.findChildrenByType(children, "ActionBlock", 1);
-  const actionBlock2 = utils.findChildrenByType(children, "ActionBlock", 2);
+  const demo1 = utils.findChildrenByType(children, Demonstration.name, 1);
+  const demo2 = utils.findChildrenByType(children, Demonstration.name, 2);
+  const tryIt = utils.findChildrenByType(children, TryIt.name);
+  const actionBlock1 = utils.findChildrenByType(children, ActionBlock.name, 1);
+  const actionBlock2 = utils.findChildrenByType(children, ActionBlock.name, 2);
 
   const mode = demo1 && demo2 ? 'compare' : (demo1 && tryIt ? 'tryit' : 'single');
 

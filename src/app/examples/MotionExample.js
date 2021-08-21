@@ -1,20 +1,21 @@
 import React, { useCallback, useReducer, useState } from "react";
 import { Image, Button, ButtonGroup } from "react-bootstrap";
-import Movement from "../../libs/animations/Movement/Movement";
+import Motion from "../../libs/animations/Motion/Motion";
 import Ball from "./images/soccer-ball.png";
 import ExampleModule from "./ExampleModule";
 import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
 
-const ExampleMovement = ()  => {
+const MotionExample = ()  => {
   const [playVertical, setPlayVertical] = useState(false);  
   const [playHorizontal, setPlayHorizontal] = useState(false);
   const [playDiagonal, setPlayDiagonal] = useState(false);
   const [playOrthogonal, setPlayOrthogonal] = useState(false);
   const [playBox, setPlayBox] = useState(false);
+  const [playCircle, setPlayCircle] = useState(false);
 
   return (    
     <ExampleModule className="demo-animations-moving">
-      <ExampleModule.Item title="Unidirectional Movement">
+      <ExampleModule.Item title="Unidirectional Motion">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayVertical(true)}>Play</Button>
@@ -22,9 +23,9 @@ const ExampleMovement = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Vertical">
-          <Movement direction="vertical" play={playVertical} style={{ height: '250px'}}>
+          <Motion direction="vertical" play={playVertical} style={{ height: '250px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
-          </Movement>
+          </Motion>
         </ExampleModule.Item.Demo>
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
@@ -33,13 +34,13 @@ const ExampleMovement = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Horizontal">
-          <Movement direction="horizontal" play={playHorizontal} style={{ height: '250px'}}>
+          <Motion direction="horizontal" play={playHorizontal} style={{ height: '250px'}}>
             <Image src={Ball} style={{ height: '100px', marginTop: '30px'}} />
-          </Movement>
+          </Motion>
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
       
-      <ExampleModule.Item title="Bilateral Movement">
+      <ExampleModule.Item title="Bilateral Motion">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayDiagonal(true)}>Play</Button>
@@ -47,9 +48,9 @@ const ExampleMovement = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Diagonal">
-          <Movement direction="diagonal" play={playDiagonal} style={{ height: '300px'}}>
+          <Motion direction="diagonal" play={playDiagonal} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
-          </Movement>
+          </Motion>
         </ExampleModule.Item.Demo>
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
@@ -58,13 +59,13 @@ const ExampleMovement = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Orthogonal">
-          <Movement direction="orthogonal" play={playOrthogonal} style={{ height: '300px'}}>
+          <Motion direction="orthogonal" play={playOrthogonal} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
-          </Movement>
+          </Motion>
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
 
-      <ExampleModule.Item title="Loop Movement">
+      <ExampleModule.Item title="Loop Motion">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayBox(true)}>Play</Button>
@@ -72,22 +73,24 @@ const ExampleMovement = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Box">
-          <Movement direction="box" play={playBox} style={{ height: '300px'}}>
+          <Motion direction="box" play={playBox} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
-          </Movement>
+          </Motion>
         </ExampleModule.Item.Demo>
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
-            <Button variant="secondary" onClick={() => {}}>Play</Button>
-            <Button variant="secondary" onClick={() => {}}>Stop</Button>
+            <Button variant="secondary" onClick={() => setPlayCircle(true)}>Play</Button>
+            <Button variant="secondary" onClick={() => setPlayCircle(false)}>Stop</Button>
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Circular">
-          <WorkInProgress />
+          <Motion direction="circle" play={playCircle} style={{ height: '300px'}}>
+            <Image src={Ball} style={{ height: '100px'}} />
+          </Motion>
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
     </ExampleModule>       
   );
 }
 
-export default ExampleMovement;
+export default MotionExample;

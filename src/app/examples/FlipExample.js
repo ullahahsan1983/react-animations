@@ -5,7 +5,7 @@ import Male from "./images/male-avatar.png";
 import Female from "./images/female-avatar.png";
 import ExampleModule from "./ExampleModule";
 
-const ExampleFlip = ()  => {
+const FlipExample = ()  => {
   return (    
     <ExampleModule className="demo-transitions-flip">
       <ExampleModule.Item title="Flat Flip" description="Hover over image to see the effect">
@@ -106,4 +106,4 @@ const ExampleFlip = ()  => {
   );
 }
 
-export default ExampleFlip;
+export default FlipExample;
