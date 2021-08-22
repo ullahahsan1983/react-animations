@@ -11,11 +11,13 @@ const MotionExample = ()  => {
   const [playDiagonal, setPlayDiagonal] = useState(false);
   const [playOrthogonal, setPlayOrthogonal] = useState(false);
   const [playBox, setPlayBox] = useState(false);
+  const [playTriangle, setPlayTriangle] = useState(false);
   const [playCircle, setPlayCircle] = useState(false);
+  const [playOval, setPlayOval] = useState(false);
 
   return (    
     <ExampleModule className="demo-animations-moving">
-      <ExampleModule.Item title="Unidirectional Motion">
+      <ExampleModule.Item title="Straight Motion">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayVertical(true)}>Play</Button>
@@ -40,7 +42,7 @@ const MotionExample = ()  => {
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
       
-      <ExampleModule.Item title="Bilateral Motion">
+      <ExampleModule.Item title="Lateral Motion">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayDiagonal(true)}>Play</Button>
@@ -65,7 +67,7 @@ const MotionExample = ()  => {
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
 
-      <ExampleModule.Item title="Loop Motion">
+      <ExampleModule.Item title="Loop Motion - Linear">
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayBox(true)}>Play</Button>
@@ -79,14 +81,48 @@ const MotionExample = ()  => {
         </ExampleModule.Item.Demo>
         <ExampleModule.Item.Actions>
           <ButtonGroup size="sm" aria-label="Play/Stop">
+            <Button variant="secondary" onClick={() => setPlayTriangle(true)}>Play</Button>
+            <Button variant="secondary" onClick={() => setPlayTriangle(false)}>Stop</Button>
+          </ButtonGroup>
+        </ExampleModule.Item.Actions>
+        <ExampleModule.Item.Demo title="Triangle">
+          <div className="stacked">
+            <span className="shape-triangle" style={{ width: "200px", height: "200px"}}></span>
+            <Motion direction="triangle" play={playTriangle} style={{ height: '300px'}}>
+              <Image src={Ball} style={{ height: '50px', width: '50px' }} />
+            </Motion>
+          </div>
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+
+      <ExampleModule.Item title="Loop Motion - Circular">
+        <ExampleModule.Item.Actions>
+          <ButtonGroup size="sm" aria-label="Play/Stop">
             <Button variant="secondary" onClick={() => setPlayCircle(true)}>Play</Button>
             <Button variant="secondary" onClick={() => setPlayCircle(false)}>Stop</Button>
           </ButtonGroup>
         </ExampleModule.Item.Actions>
-        <ExampleModule.Item.Demo title="Circular">
-          <Motion direction="circle" play={playCircle} style={{ height: '300px'}}>
-            <Image src={Ball} style={{ height: '100px'}} />
-          </Motion>
+        <ExampleModule.Item.Demo title="Circle">
+          <div className="stacked">
+            <span className="shape-circle" style={{ width: "200px", height: "200px"}}></span>
+            <Motion direction="circle" play={playCircle} style={{ height: '300px'}}>
+              <Image src={Ball} style={{ height: '50px', width: '50px' }} />
+            </Motion>
+          </div>
+        </ExampleModule.Item.Demo>
+        <ExampleModule.Item.Actions>
+          <ButtonGroup size="sm" aria-label="Play/Stop">
+            <Button variant="secondary" onClick={() => setPlayOval(true)}>Play</Button>
+            <Button variant="secondary" onClick={() => setPlayOval(false)}>Stop</Button>
+          </ButtonGroup>
+        </ExampleModule.Item.Actions>
+        <ExampleModule.Item.Demo title="Oval">
+          <div className="stacked">
+            <span className="shape-circle" style={{ width: "200px", height: "100px"}}></span>
+            <Motion direction="oval" play={playOval} style={{ height: '300px'}}>
+              <Image src={Ball} style={{ height: '50px', width: '50px' }} />
+            </Motion>
+          </div>
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>
     </ExampleModule>       

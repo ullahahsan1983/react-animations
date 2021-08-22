@@ -105,9 +105,10 @@ const ExampleItem = ({children, ...props}) => {
   );
 }
 
-const ExampleModule = ({children, ...props})  => {
+const ExampleModule = ({children, className, ...props})  => {
+  const classes = `example-module ${className || ''}`;
   return (
-    <div {...props}>
+    <div className={classes} {...props}>
         {children}
     </div>
   );
