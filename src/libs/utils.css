@@ -1,0 +1,20 @@
+/* draw a circle */ 
+/* it will render circle if applied on a symetric width-height span */
+/* it will render oval if applied on an asymetric width-height span */
+.shape-circle {
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+/* All items inside this container will be accentric and overlapping */
+.stacked {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.stacked > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
