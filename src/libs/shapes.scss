@@ -1,0 +1,143 @@
+@use "sass:math" as math;
+
+$triangle-base: 150;
+$triangle-height: 180;
+
+:root {
+  --shape-border-no-fill: solid transparent;
+  --shape-border: 1px solid black;
+  --shape-bg-no-fill: transparent;
+  --shape-bg: gray;
+  --shape-triangle-base: $triangle-base;
+  --shape-triangle-height: $triangle-height;
+  --shape-rect-skew: skewX(25deg);
+  --shape-rect-skew-reverse: skewX(-25deg);
+}
+
+@mixin triangle-side($side, $state){
+  /// $state >> 0: unchanged, >0: fill, <0: unfill
+  @if $state != 0 {
+    $fill-color: var(--shape-bg);
+
+    @if $state > 0 {
+      border-#{$side}: #{$state}px solid #{$fill-color};
+    }
+    @else {
+      border-#{$side}: #{-$state}px solid transparent;
+    }
+  }
+}
+
+/// Decide whether a border side of triangle will be filled or not
+/// Sequence should be in order >> top, right, bottom, left
+/// Possible values for each param >> 0: unchanged, >0: fill, <0: unfill
+@mixin set-triangle($top, $right, $bottom, $left) {
+  @include triangle-side(top, $top);
+  @include triangle-side(right, $right);
+  @include triangle-side(bottom, $bottom);
+  @include triangle-side(left, $left);
+}
+
+@mixin angle-side($side, $skew){
+  @if $skew == null {
+    border-#{$side}: transparent;
+  }
+  @if $skew != 0 {
+    transform: $skew;
+  }
+}
+
+@mixin set-angle($top, $right, $bottom, $left, $origin) {
+  background: transparent;
+  border: var(--shape-border);
+  transform-origin: $origin;
+  @include angle-side(top, $top);
+  @include angle-side(right, $right);
+  @include angle-side(bottom, $bottom);
+  @include angle-side(left, $left);
+}
+
+.shape-square, .shape-rectangle, .shape-rombus, .shape-parallelogram {
+  background: transparent;
+  border: var(--shape-border);
+}
+
+.shape-parallelogram {
+  transform: var(--shape-rect-skew-reverse);
+  transform-origin: bottom left;
+}
+
+.shape-rombus {
+  transform: var(--shape-rect-skew);
+  transform-origin: bottom right;
+}
+
+.shape-circle, .shape-oval {
+  background: transparent;
+  border: var(--shape-border);
+  border-radius: 50%;
+}
+
+.shape-angle-{
+  &orthogonal {
+    @include set-angle(null, null, 0, 0, bottom left);
+  }
+  &bottomleft {
+    @include set-angle(null, null, var(--shape-rect-skew-reverse), 0, bottom left);
+  }
+  &bottomright {
+    @include set-angle(null, 0, var(--shape-rect-skew), null, bottom right);
+  }
+  &topright {
+    @include set-angle(var(--shape-rect-skew-reverse), 0, null, null, top right);
+  }
+  &topleft {
+    @include set-angle(var(--shape-rect-skew), null, null, 0, top left);
+  }
+  &leftcenter {
+    @include set-angle(null, null, 0, translateY(-25%) translateX(25%) rotate(45deg), center center);
+  }
+  &rightcenter {
+    @include set-angle(null, translateY(-25%) translateX(-25%) rotate(-45deg), 0, null, center center);
+  }
+  &topcenter {
+    @include set-angle(translateY(35%) rotate(-45deg), 0, null, null, center center);
+  }
+  &bottomcenter {
+    @include set-angle(null, null, 0, translateY(-35%) rotate(-45deg), center center);
+  }
+}
+
+.shape-triangle-{
+  $base: $triangle-base;
+  $height: $triangle-height;
+
+  &up, &down, &left, &right, &topleft, &topright, &bottomleft, &bottomright {
+    width: 0 !important;
+    height: 0 !important;
+  }
+  &up {
+    @include set-triangle(0, -$base / 2, $height, -$base / 2);
+  }
+  &down {
+    @include set-triangle($height, -$base / 2, 0, -$base / 2);
+  }
+  &left {
+    @include set-triangle(-$base / 2, $height, -$base / 2, 0);
+  }
+  &right {
+    @include set-triangle(-$base / 2, 0, -$base / 2, $height);
+  }
+  &topleft {
+    @include set-triangle($height, -$base, 0, 0);
+  }
+  &topright {
+    @include set-triangle($height, 0, 0, -$base);
+  }
+  &bottomleft {
+    @include set-triangle(0, -$base, $height, 0);
+  }
+  &bottomright {
+    @include set-triangle(0, 0, $height, -$base);
+  }
+}

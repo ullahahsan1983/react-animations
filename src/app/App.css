@@ -1,4 +1,5 @@
 @import '../libs/skin/scroll-square.css';
+@import '../libs/utils.css';
 
 .App {
   text-align: center;
@@ -64,11 +65,28 @@ footer {
   border: 20px solid;
   border-radius: 5px;
   border-color: #636464;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
-.example-container .demo-content {
+.example-module {
+  position: relative;
+}
+
+.example-module .demo-content {
   display: flex;
   justify-content: center;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+}
+
+.demo-shapes .demo-content {
+  justify-content: space-between;
+  padding: 0 20px 0 20px;
+}
+
+.demo-shapes figure {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
 }
