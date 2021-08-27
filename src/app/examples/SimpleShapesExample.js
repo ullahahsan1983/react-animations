@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { Image, Button, ButtonGroup } from "react-bootstrap";
+import React from "react";
 import Shape from "../../libs/shapes/Shape";
 import ExampleModule from "./ExampleModule";
 
-const ShapeExample = ()  => {
+const SimpleShapesExample = ()  => {
   return (    
-    <ExampleModule className="demo-shapes">
+    <ExampleModule className="demo-shapes" description="Shapes rendered by classic css transormations e.g. transform/translate/rotate/skew">
       <ExampleModule.Item title="Corner Angles">
         <ExampleModule.Item.Demo>
           <Shape form="angle-orthogonal" title="Right Angle" style={{width: "150px", height: "180px"}} />
@@ -52,8 +51,26 @@ const ShapeExample = ()  => {
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>  
 
+      <ExampleModule.Item title="Circular">
+        <ExampleModule.Item.Demo>
+          <Shape form="circle" title="Circle" style={{width: "150px", height: "150px"}} />
+          <Shape form="oval" title="Oval" style={{width: "200px", height: "150px"}} />
+          <Shape form="egg fill" title="Egg" style={{width: "126px", height: "180px"}} />
+          <Shape form="capsule fill" title="Capsule" style={{width: "200px", height: "120px"}} />
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+      
+      <ExampleModule.Item title="Miscellaneous">
+        <ExampleModule.Item.Demo>
+          <Shape form="pie" title="Pie" style={{ marginBottom: "20px" }} />
+          <Shape form="cone" title="Cone" style={{ marginBottom: "-50px"}} />
+          <Shape form="" title="" />
+          <Shape form="" title="" />
+        </ExampleModule.Item.Demo>
+      </ExampleModule.Item>
+
     </ExampleModule>           
   );
 }
 
-export default ShapeExample;
+export default SimpleShapesExample;

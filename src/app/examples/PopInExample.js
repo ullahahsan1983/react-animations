@@ -2,7 +2,6 @@ import React from "react";
 import { Image } from "react-bootstrap";
 import PopIn from "../../libs/transitions/PopIn/PopIn";
 import Male from "./images/male-avatar.png";
-import Female from "./images/female-avatar.png";
 import ExampleModule from "./ExampleModule";
 
 const PopInExample = ()  => {

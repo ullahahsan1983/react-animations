@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import * as utils from "../../libs/utils";
-import { Row, Col, Card, CardGroup, Button } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
 import SplitPanel from "../../libs/widgets/SplitPanel/SplitPanel";
 
@@ -24,7 +24,7 @@ const ActionBlock = (props) => {
   return <>{props.children}</>;
 }
 
-const ExampleItem = ({children, ...props}) => {  
+const ExampleItem = ({children, className, ...props}) => {  
   const demo1 = utils.findChildrenByType(children, Demonstration.name, 1);
   const demo2 = utils.findChildrenByType(children, Demonstration.name, 2);
   const tryIt = utils.findChildrenByType(children, TryIt.name);
@@ -33,12 +33,14 @@ const ExampleItem = ({children, ...props}) => {
 
   const mode = demo1 && demo2 ? 'compare' : (demo1 && tryIt ? 'tryit' : 'single');
 
+  let panelClassName = `${className || ''}`;
+
   let template;
   switch(mode)
   {
     case 'compare':
       template = 
-      <SplitPanel>
+      <SplitPanel className={panelClassName}>
         <SplitPanel.Left className="demo-content">
           {demo1.props && demo1.props.title &&
             <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
@@ -55,7 +57,7 @@ const ExampleItem = ({children, ...props}) => {
       break;
     case 'tryit':
       template = 
-      <SplitPanel>
+      <SplitPanel className={panelClassName}>
         <SplitPanel.Left className="demo-content">
           {demo1.props && demo1.props.title &&
             <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
@@ -72,7 +74,8 @@ const ExampleItem = ({children, ...props}) => {
       break;
     case 'single':
     default:
-      template = <SplitPanel className="demo-content">{demo1}</SplitPanel>;
+      panelClassName += " demo-content";
+      template = <SplitPanel className={panelClassName}>{demo1}</SplitPanel>;
       break;    
   }
 
@@ -105,11 +108,12 @@ const ExampleItem = ({children, ...props}) => {
   );
 }
 
-const ExampleModule = ({children, className, ...props})  => {
+const ExampleModule = ({children, className, description, ...props})  => {
   const classes = `example-module ${className || ''}`;
   return (
     <div className={classes} {...props}>
-        {children}
+      {description && <div className="text-muted description sticky">{description}</div>}
+      {children}
     </div>
   );
 }

@@ -1,20 +1,29 @@
 import React from "react";
 import '../shapes.scss';
 
-const Shape = (props)  => {
-  const className = `shape shape-${props.form}`;
+const CompositeShape = ({children, ...props}) => {
+  return (
+    <div {...props}>
+      {children}
+    </div>
+  );
+}
+
+const Shape = ({children, ...props})  => {
+  const className = `shape shape-${props.form} ${children ? 'shape-composite': ''} ${props.shadow ? 'shadowy': ''}`;
 
   return (
-    <figure style={{minWidth: '220px', minHeight: '220px'}}>
+    <figure>
       <figcaption className="text-muted">{props.title || props.form.toUpperCase()}</figcaption>
-      <span className={className} {...props}></span>
+      {children && <CompositeShape className={className} {...props}>{children}</CompositeShape>}
+      {!children && <span className={className} {...props}></span>}
     </figure>
   );
 }
 
 Shape.defaultProps = {
-  fill: 'false', // possible values: false, any color code
-  form: 'square', // possible values: 'circle', 'oval'
+  form: 'square', // possible values: 'circle', 'oval' etc
+  shadow: false
 };
 
 export default Shape;

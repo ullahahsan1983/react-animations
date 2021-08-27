@@ -1,17 +1,157 @@
-@use "sass:math" as math;
+@use "sass:math";
+@use "sass:string";
+@import "./utils";
 
-$triangle-base: 150;
-$triangle-height: 180;
+$triangle-base: 100;
+$triangle-height: 100;
 
 :root {
-  --shape-border-no-fill: solid transparent;
-  --shape-border: 1px solid black;
-  --shape-bg-no-fill: transparent;
+  --shape-border-color: black;
   --shape-bg: gray;
+  --shape-border-no-fill: solid transparent;
+  --shape-border: 1px solid var(--shape-border-color);
+  --shape-bg-no-fill: transparent;
   --shape-triangle-base: $triangle-base;
   --shape-triangle-height: $triangle-height;
   --shape-rect-skew: skewX(25deg);
   --shape-rect-skew-reverse: skewX(-25deg);
+  --shape-diamond-alt-color: #c9ffe5;
+  --shape-diamond-color: #b9f2ff;
+  --shape-star-color: #ffd27d;
+  --shape-egg-color: #ffd79a;
+  --shape-capsule-color: #01B9F9;
+}
+
+.void-area {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.bordered-area {
+  border: var(--shape-border);
+}
+
+.transparent {
+  background: transparent;
+}
+
+.pseudo {
+  position: absolute;
+  content: '';
+}
+
+/* Proxy function for math module. For some reason math module is not loading correctly. Need to fix that */
+$sine-chart: (
+  "0": 0,
+  "5": 0.0872,
+  "6": 0.1045,
+  "10": 0.1736,
+  "12": 0.2079,
+  "15": 0.2588,
+  "18": 0.3090,
+  "20": 0.3420,
+  "24": 0.4067,
+  "25": 0.4226,
+  "30": 0.5,
+  "36": 0.5878,
+  "40": 0.6428,
+  "45": 0.7071,
+  "50": 0.7660,
+  "54": 0.8090,
+  "60": 0.8660,
+  "70": 0.9397,
+  "72": 0.9511,
+  "75": 0.9659,
+  "80": 0.9848,
+  "90": 1
+);
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+  
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+  
+  @return $string;
+}
+@function sin($deg){
+  $key: str-replace(quote($deg), 'deg',''); 
+  @return map-get($sine-chart, $key);
+}
+@function cos($deg){
+  @return sin(90deg - $deg);
+}
+
+$fill-colors: (
+  "black": black white,
+  "gray": gray lightgray,
+  "red": red darkred,
+  "yellow": yellow lightyellow,
+  "blue": blue lightblue,
+  "cyan": cyan #198FCB,
+  "sunflower": #ffe600 #fe7d00,
+  "star": #ffd27d #ffd27d,
+  "diamond": #b9f2ff #c9ffe5,
+  "capsule": #01B9F9 #c9ffe5,
+  "moon": #d5c7b4 #FF9038,
+  "flower": deeppink lightpink,
+  "darkorange": #{darken(#fe7d00, 15%)} #{lighten(#fe7d00, 15%)}
+);
+
+@each $name, $color in $fill-colors {
+   $c: nth($color, 1);
+   $alt: nth($color, 2);
+   @if($c == null) { $c: $color };
+   @if($alt == null) { $alt: $c };
+
+  .fill-#{$name} {
+    background-color: $c !important;
+    &::after, &::before {
+      background-color: $c !important;
+    }
+    &-alt, &-alt::before, &-alt::after {
+      background-color: $alt !important;
+    }
+    &-gradient, &-gradient::before, &-gradient::after {
+      background-image: linear-gradient($c, $alt) !important;  
+    }
+  }
+
+  .border-#{$name} {
+    border-color: $c !important;
+    &::after, &::before {
+      border-color: $c !important;
+    }
+    &-alt, &-alt::before, &-alt::after {
+      border-color: $alt !important;
+    }   
+  }
+}
+
+@function fill-color($name, $seq: 1){
+  $color: map-get($fill-colors, $name);
+  $prime: nth($color, 1);
+  $alt: nth($color, $seq);
+
+  @if($alt == null){
+    @return $prime;
+  } 
+  @return $alt;
+}
+
+@mixin set-border($side, $w, $c: null) {
+  @if ($c != null) {
+    border-#{$side}: $w solid $c;
+  }
+  @else {
+    border-#{$side}: $w solid transparent !important;
+  }
+}
+
+@mixin borders($borders...){
+  @each $side, $w, $c in $borders {
+    @include set-border($side, $w, $c);
+  }
 }
 
 @mixin triangle-side($side, $state){
@@ -20,10 +160,10 @@ $triangle-height: 180;
     $fill-color: var(--shape-bg);
 
     @if $state > 0 {
-      border-#{$side}: #{$state}px solid #{$fill-color};
+      @include set-border($side, #{$state}px, $fill-color);
     }
     @else {
-      border-#{$side}: #{-$state}px solid transparent;
+      @include set-border($side, #{-$state}px);
     }
   }
 }
@@ -38,28 +178,88 @@ $triangle-height: 180;
   @include triangle-side(left, $left);
 }
 
-@mixin angle-side($side, $skew){
-  @if $skew == null {
-    border-#{$side}: transparent;
-  }
-  @if $skew != 0 {
-    transform: $skew;
+@mixin free-angle($origin, $side-x, $side-y) {
+  @extend .transparent;
+  @include box-angles($origin, $side-x, $side-y);
+}
+
+@mixin box-angles($origin, $angles...) {
+  transform-origin: $origin;
+  @each $side, $skew in $angles {
+    @include set-border($side, 1px, var(--shape-border-color));
+    @if $skew != 0 {
+      transform: #{$skew};
+    }
   }
 }
 
-@mixin set-angle($top, $right, $bottom, $left, $origin) {
-  background: transparent;
-  border: var(--shape-border);
-  transform-origin: $origin;
-  @include angle-side(top, $top);
-  @include angle-side(right, $right);
-  @include angle-side(bottom, $bottom);
-  @include angle-side(left, $left);
+.shape-angle-{
+  &orthogonal {
+    @include free-angle(bottom left, bottom 0, left 0);
+  }
+  &bottomleft {
+    @include free-angle(bottom left, bottom var(--shape-rect-skew-reverse), left 0);
+  }
+  &bottomright {
+    @include free-angle(bottom right, bottom var(--shape-rect-skew), right 0);
+  }
+  &topright {
+    @include free-angle(top right, top var(--shape-rect-skew-reverse), right 0);
+  }
+  &topleft {
+    @include free-angle(top left, top var(--shape-rect-skew), left 0);
+  }
+  &leftcenter {
+    @include free-angle(center center, bottom 0, left "translateY(-25%) translateX(25%) rotate(45deg)");
+  }
+  &rightcenter {
+    @include free-angle(center center, bottom 0, right "translateY(-25%) translateX(-25%) rotate(-45deg)");
+  }
+  &topcenter {
+    @include free-angle(center center, top "translateY(35%) rotate(-45deg)", right 0);
+  }
+  &bottomcenter {
+    @include free-angle(center center, bottom 0, left "translateY(-35%) rotate(-45deg)");
+  }
+}
+
+.shape-triangle-{
+  $base: $triangle-base;
+  $height: $triangle-height;
+
+  &up, &down, &left, &right, &topleft, &topright, &bottomleft, &bottomright {
+    &.fill{
+      @extend .void-area;
+    }
+  }
+  &up.fill {
+    @include set-triangle(0, -$base / 2, $height, -$base / 2);
+  }
+  &down.fill {
+    @include set-triangle($height, -$base / 2, 0, -$base / 2);
+  }
+  &left.fill {
+    @include set-triangle(-$base / 2, $height, -$base / 2, 0);
+  }
+  &right.fill {
+    @include set-triangle(-$base / 2, 0, -$base / 2, $height);
+  }
+  &topleft.fill {
+    @include set-triangle($height, -$base, 0, 0);
+  }
+  &topright.fill {
+    @include set-triangle($height, 0, 0, -$base);
+  }
+  &bottomleft.fill {
+    @include set-triangle(0, -$base, $height, 0);
+  }
+  &bottomright.fill {
+    @include set-triangle(0, 0, $height, -$base);
+  }
 }
 
 .shape-square, .shape-rectangle, .shape-rombus, .shape-parallelogram {
-  background: transparent;
-  border: var(--shape-border);
+  @extend .bordered-area;
 }
 
 .shape-parallelogram {
@@ -73,71 +273,549 @@ $triangle-height: 180;
 }
 
 .shape-circle, .shape-oval {
-  background: transparent;
-  border: var(--shape-border);
+  @extend .bordered-area;
   border-radius: 50%;
 }
 
-.shape-angle-{
-  &orthogonal {
-    @include set-angle(null, null, 0, 0, bottom left);
-  }
-  &bottomleft {
-    @include set-angle(null, null, var(--shape-rect-skew-reverse), 0, bottom left);
-  }
-  &bottomright {
-    @include set-angle(null, 0, var(--shape-rect-skew), null, bottom right);
-  }
-  &topright {
-    @include set-angle(var(--shape-rect-skew-reverse), 0, null, null, top right);
-  }
-  &topleft {
-    @include set-angle(var(--shape-rect-skew), null, null, 0, top left);
-  }
-  &leftcenter {
-    @include set-angle(null, null, 0, translateY(-25%) translateX(25%) rotate(45deg), center center);
-  }
-  &rightcenter {
-    @include set-angle(null, translateY(-25%) translateX(-25%) rotate(-45deg), 0, null, center center);
-  }
-  &topcenter {
-    @include set-angle(translateY(35%) rotate(-45deg), 0, null, null, center center);
-  }
-  &bottomcenter {
-    @include set-angle(null, null, 0, translateY(-35%) rotate(-45deg), center center);
+.shape-capsule {
+  @extend .bordered-area;
+  border: var(--shape-border);
+  border-radius: 40% 40%/60% 60%;
+  &.fill {
+    background-color: var(--shape-capsule-color);
+    border-color: var(--shape-capsule-color);
   }
 }
 
-.shape-triangle-{
-  $base: $triangle-base;
-  $height: $triangle-height;
+.shape-egg {
+  border: var(--shape-border);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  &.fill{
+    background-color: var(--shape-egg-color);
+    border-color: var(--shape-egg-color);
+  }
+}
 
-  &up, &down, &left, &right, &topleft, &topright, &bottomleft, &bottomright {
-    width: 0 !important;
-    height: 0 !important;
+$diamond-base: 70px;
+$diamond-height: 100px;
+$diamond-fill: var(--shape-diamond-color);
+
+.shape-diamond-classic {  
+  @extend .void-area;
+
+  position: relative;
+  top: -$diamond-base;
+  @include borders(
+    left $diamond-base, 
+    right $diamond-base, 
+    bottom $diamond-height $diamond-fill
+  );
+  
+  &::after {
+    @extend .void-area;
+    content: '';
+    position: absolute;
+    left: -$diamond-base;
+    top: $diamond-height;
+    @include borders(
+      left $diamond-base, 
+      right $diamond-base, 
+      top $diamond-height $diamond-fill
+    );
   }
-  &up {
-    @include set-triangle(0, -$base / 2, $height, -$base / 2);
+}
+
+.shape-diamond-shield {
+  @extend .void-area;
+  
+  position: relative;
+  top: -$diamond-base;
+  @include borders(
+    left $diamond-base, 
+    right $diamond-base, 
+    bottom #{$diamond-height - $diamond-base} $diamond-fill
+  );
+  
+  &::after {
+    @extend .void-area;
+    content: '';
+    position: absolute;
+    left: -$diamond-base;
+    top: #{$diamond-height - $diamond-base};
+    @include borders(
+      left $diamond-base, 
+      right $diamond-base, 
+      top $diamond-height $diamond-fill
+    );
   }
-  &down {
-    @include set-triangle($height, -$base / 2, 0, -$base / 2);
+}
+
+.shape-diamond-cut {
+  $w: $diamond-base * 0.5;
+
+  position: relative;
+  width: $diamond-base;
+  box-sizing: content-box;
+
+  @include borders(
+    left $w, 
+    right $w, 
+    bottom $w $diamond-fill
+  );
+  
+  &::after {
+    @extend .void-area;
+    content: "";
+    position: absolute;
+    top: $w;
+    left: -$w;
+    @include borders(
+      left $diamond-base, 
+      right $diamond-base, 
+      top $diamond-height $diamond-fill
+    );
   }
-  &left {
-    @include set-triangle(-$base / 2, $height, -$base / 2, 0);
+}
+
+.shape-pie {
+  $w: 70px;
+  @extend .void-area;
+  @include borders(
+    left $w var(--shape-bg), 
+    right $w var(--shape-bg), 
+    bottom $w var(--shape-bg), 
+    top $w
+  );  
+  border-radius: $w;
+}
+
+.shape-cone {
+  $w: 70px;
+  $h: $w * 2;
+  position: relative;
+
+  @include borders(
+    left $w, 
+    right $w, 
+    bottom $w, 
+    top $h var(--shape-bg)
+  );
+  border-radius: 50%;
+}
+
+.shape-composite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shape-composite figcaption {
+  display: none;
+}
+
+.shape-chevron {
+  $skew: 10deg;
+
+  position: relative;
+  background: transparent !important;  
+  height: 50%;
+  width: 100%;
+      
+  &::before {
+    @extend .pseudo;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 51%;
+    transform: skew(0deg, -$skew);
   }
-  &right {
-    @include set-triangle(-$base / 2, 0, -$base / 2, $height);
+  &::after {
+    @extend .pseudo;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+    transform: skew(0deg, $skew);
+  } 
+
+  &.down {
+    transform: rotate(180deg);
   }
-  &topleft {
-    @include set-triangle($height, -$base, 0, 0);
+  &.left {
+    transform: rotate(-90deg);
   }
-  &topright {
-    @include set-triangle($height, 0, 0, -$base);
+  &.right {
+    transform: rotate(90deg);
   }
-  &bottomleft {
-    @include set-triangle(0, -$base, $height, 0);
+}
+
+@mixin curved-shadow($corner-x, $corner-y, $box-x, $box-y) {
+  $f: 50px;
+  $bg: var(--shape-bg);
+  #{$corner-x}: 0;
+  #{$corner-y}: 0;
+  box-shadow: #{$f * $box-x} #{$f * $box-y} 0 0 $bg;
+}
+
+.shape-curved-corner {
+  $w: 100%;
+  $h: 100%;
+
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    border-radius: 50%;
   }
-  &bottomright {
-    @include set-triangle(0, 0, $height, -$base);
+
+  &.bottomleft::before {
+    @include curved-shadow(bottom, left, -1, 1);
   }
+
+  &.bottomright::before {
+    @include curved-shadow(bottom, right, 1, 1);
+  }
+
+  &.topleft::before {
+    @include curved-shadow(top, left, -1, -1);
+  }
+
+  &.topright::before {
+    @include curved-shadow(top, right, 1, -1);
+  }
+}
+
+$star-arm: 100px;
+$star-color: var(--shape-star-color);
+
+@mixin star-triangle($base, $height, $side){
+  @extend .void-area;
+  $cover: $base * 0.5;
+
+  border-left: $cover solid transparent;
+  border-right: $cover solid transparent;
+  border-#{$side}: $height solid $star-color;
+}
+
+.shape-star-six {
+  $height: $star-arm * 0.866; /*Formula for equilateral triangle height */
+  $h-gap: $star-arm * 0.5;
+  $v-gap: $star-arm * 0.3;
+
+  position: relative;
+  @include star-triangle($star-arm, $height, bottom);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: $v-gap;
+    left: -$h-gap;
+    @include star-triangle($star-arm, $height, top);
+  }  
+}
+
+.shape-star-five {
+  $r: 35deg;
+  $arm: $star-arm * 0.5; //100px
+  $edge: $arm * 0.7; //70px
+  $offset: $arm * 0.01;
+  $c: $star-color;
+
+  @extend .void-area;
+  position: relative;
+
+  @include star-triangle($star-arm, $edge, top);
+
+  &::before {
+    @extend .void-area;
+    content: "";
+    position: absolute;
+    top: -$edge; 
+    left: -#{$arm - $offset}; 
+    @include star-triangle($star-arm, $edge, top);
+    transform: rotate(#{$r * 2});
+  }
+
+  &::after {
+    @extend .void-area;
+    content: "";
+    position: absolute;
+    top: -$edge;
+    left: -#{$arm + $offset};
+    @include star-triangle($star-arm, $edge, top);
+    transform: rotate(-#{$r * 2});
+  }
+}
+
+.shape-hexagon {
+  $arm: 50px;
+  $width: $arm * 1.73;
+  $offset: 0.25px;
+  @extend .void-area;
+  position: relative;
+
+  border-left: $width solid var(--shape-bg);
+  border-top: $arm solid  var(--shape-bg);
+
+  &::before {
+    @extend .void-area;
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$width}, -#{$arm * 1.5 - $offset});
+    border-left: #{$width * 0.5} solid transparent;
+    border-right: #{$width * 0.5} solid transparent;
+    border-bottom: #{$arm * 0.5} solid  var(--shape-bg);
+  }
+
+  &::after {
+    @extend .void-area;
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$width}, -#{$offset});
+    border-left: #{$width * 0.5} solid transparent;
+    border-right: #{$width * 0.5} solid transparent;
+    border-top: #{$arm * 0.5} solid  var(--shape-bg);
+  }
+}
+
+.shape-octagon {
+  $arm: 50px;
+  $base-gap: $arm * sin(45deg); // arm * sin45
+  $width: $base-gap + $arm + $base-gap;
+  $offset: 0.5px;
+
+  position: relative;
+  width: $width;
+  border-left: $width solid var(--shape-bg);
+  border-top: $arm solid  var(--shape-bg);
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$width}, -#{$arm + $base-gap - $offset});
+    width: $width;
+    border-left: $base-gap solid transparent;
+    border-right: $base-gap solid transparent;
+    border-bottom: $base-gap solid  var(--shape-bg);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$width}, -#{$offset});
+    width: $width;
+    border-left: $base-gap solid transparent;
+    border-right: $base-gap solid transparent;
+    border-top: $base-gap solid  var(--shape-bg);
+  }
+}
+
+.shape-pentagon {
+  $arm: 50px;
+  $base-gap: $arm * 0.309; // arm * cos72
+  $mid-h: $arm * 0.951; // arm * sin72
+  $top-h: $arm * 0.588; // arm * sin36
+  $width: $base-gap + $arm + $base-gap;
+  $offset: 0.25px;
+
+  position: relative;
+  width: $width;
+  border-left: $base-gap solid transparent;
+  border-right: $base-gap solid transparent;
+  border-top: $mid-h solid  var(--shape-bg);
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$width * 0.5}, -#{$top-h + $mid-h - $offset});
+    width: $width;
+    border-left: #{$width * 0.5} solid transparent;
+    border-right: #{$width * 0.5} solid transparent;
+    border-bottom: $top-h solid  var(--shape-bg);
+  }
+}
+
+.shape-heptagon {
+  $arm: 50px;
+  $base-h: $arm * 0.782; // arm * sin(360/7)
+  $mid-h: $arm * 0.975; // arm * sin(540/7)
+  $top-h: $arm * 0.434; // arm * sin(180/7)
+  $base-gap: $arm * 0.623; //arm * cos(360/7)
+  $mid-gap: $arm * 0.223; //arm * cos(540/7)
+  $mid-width: $base-gap + $arm + $base-gap;
+  $top-width: $mid-width - $mid-gap - $mid-gap;
+  $offset: 0.7px;
+
+  position: relative;
+  width: $mid-width;
+  border-left: $mid-gap solid transparent;
+  border-right: $mid-gap solid transparent;
+  border-bottom: $mid-h solid  var(--shape-bg);
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$top-width * 0.5}, -#{$top-h - $offset});
+    width: $top-width;
+    border-left: #{$top-width * 0.5} solid transparent;
+    border-right: #{$top-width * 0.5} solid transparent;
+    border-bottom: $top-h solid  var(--shape-bg);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    transform: translate(-#{$mid-width * 0.5}, #{$mid-h - $offset});
+    width: $mid-width;
+    border-left: $base-gap solid transparent;
+    border-right: $base-gap solid transparent;
+    border-top: $base-h solid  var(--shape-bg);
+  }
+}
+
+.shape-heart {
+  $width: 100px;
+  $height: $width * 0.75;
+
+  position: relative;
+  width: $width;
+  height: $height;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    width: 50%;
+    height: 100%;
+    background: red;
+    border-radius: 50% 50% 10% 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
+  &::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+    border-radius: 50% 50% 0 10%;
+  }
+}
+
+.shape-spade {
+  $width: 100px;
+  $height: $width * 0.75;
+
+  $w-stand: $width * 0.1;
+  $h-stand: $width * 0.2;
+
+  position: relative;
+  width: $w-stand;
+  height: $h-stand;
+  border-bottom: $h-stand solid black;
+  border-left: $w-stand solid transparent;
+  border-right: $w-stand solid transparent;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    width: #{$width * 0.5};
+    height: $height;
+    top: -60px;
+    left: -34px;
+    background: black;
+    border-radius: 0% 10% 50% 50%;
+    transform: rotate(45deg);
+  }
+  &::after {
+    left: -16px;
+    border-radius: 10% 0% 50% 50%;
+    transform: rotate(-45deg);
+  }
+}
+
+.shape-sun {
+  position: relative;
+  text-align: center;
+  background: $star-color;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: $star-color;
+  }
+
+  &::before {
+    transform: rotate(30deg);
+  }
+  &::after {
+    transform: rotate(60deg);
+  }
+}
+
+.shape-moon {
+  border-radius: 50%;
+  box-shadow: 15px 15px 0 0 #{fill-color("star")};
+}
+
+.shape-flower {
+  $width: 120px;
+  $color: fill-color("flower", 2);
+
+  position: relative;
+  width: $width;
+  height: $width / 3;
+  border-radius: $width / 6;
+  background: $color;
+  
+  &::after, &::before {
+    @extend .pseudo;
+    background: $color;
+    border-radius: $width / 6;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-#{$width / 2}) rotate(60deg);
+  }
+  
+  &::before {
+    transform: translateX(-#{$width / 2}) rotate(-60deg);
+  }
+}
+
+.shape-spindle {
+  $width: 50px;
+  $color: fill-color("flower", 2);
+
+  width: $width;
+  height: $width;
+  border-radius: 100% 100% 50% 100%;
+  background: lightpink;
+  transform: rotateZ(-45deg);
+  background: $color;
+  
+  &::before {
+    @extend .pseudo;
+    background: lightpink;
+    border-radius: 50% 100% 100% 100%;
+    width: 100%;
+    height: 100%;
+    transform: translateY(40px) translateX(15px);
+  }
+  
 }

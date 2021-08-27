@@ -73,6 +73,12 @@ footer {
   position: relative;
 }
 
+.example-module .description {
+  padding: 20px;
+  font-size: 20px;
+  background: #ffe4c4;
+}
+
 .example-module .demo-content {
   display: flex;
   justify-content: center;
@@ -89,4 +95,11 @@ footer {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  min-width: 200px;
+  min-height: 250px;
+}
+
+.demo-shapes .arrows figure {
+  min-width: 150px;
+  min-height: 150px;
 }
