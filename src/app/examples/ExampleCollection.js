@@ -7,13 +7,37 @@ import SimpleShapesExample from "./SimpleShapesExample";
 import CompositeShapesExample from "./CompositeShapesExample";
 
 const ExampleCollection = {
-  'Flip': FlipExample,
-  'Slide': WorkInProgress,
-  'PopIn': PopInExample,
-  'Motion': MotionExample,
-  'Simple Shapes': SimpleShapesExample,
-  'Pure CSS Shapes': PureCssShapesExample,
-  'Composite Shapes': CompositeShapesExample
+  'Effects': {
+    'Flip': FlipExample,
+    'Slide': WorkInProgress,
+    'PopIn': PopInExample,
+  },
+  'Animations': {
+    'Motion': MotionExample,
+  },
+  'Shapes': {
+    'Simple Shapes': SimpleShapesExample,
+    'Pure CSS Shapes': PureCssShapesExample,
+    'Composite Shapes': CompositeShapesExample,
+  }
 };
 
-export default ExampleCollection;
+const getExampleTree = () => {
+  let arr = [];
+
+  let order = 0;
+  for(const [key, value] of Object.entries(ExampleCollection)) {
+    if(typeof value == "function") {
+      arr.push({ order: ++order, path: key, caption: key });
+    } else {
+      arr.push({ order: ++order, path: key, caption: key, groupName: key, header: true });
+      Object.keys(value).map((itemKey, index) => {
+        arr.push({ order: ++order, path: `${key}.${itemKey}`, caption: itemKey, groupName: key });
+      });
+    }
+  }
+
+  return arr;
+}
+
+export { ExampleCollection, getExampleTree };

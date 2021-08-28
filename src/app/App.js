@@ -15,7 +15,7 @@ const App = () => {
     <LayoutProvider className="App" variant="classic">
       <LayoutProvider.Section name="header"><Header /></LayoutProvider.Section>
       <LayoutProvider.Section name="left">
-        <Sidebar left onNavigate={(e) => selectExample(e) } />
+        <Sidebar left navigate={(e) => selectExample(e) } />
       </LayoutProvider.Section>
       <LayoutProvider.Section name="main">
         <Main example={example} />

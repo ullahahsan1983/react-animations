@@ -9,8 +9,8 @@ const CompositeShape = ({children, ...props}) => {
   );
 }
 
-const Shape = ({children, ...props})  => {
-  const className = `shape shape-${props.form} ${children ? 'shape-composite': ''} ${props.shadow ? 'shadowy': ''}`;
+const Shape = ({children, shadow, ...props})  => {
+  const className = `shape shape-${props.form} ${children ? 'shape-composite': ''} ${shadow ? 'shadowy': ''}`;
 
   return (
     <figure>
@@ -22,8 +22,7 @@ const Shape = ({children, ...props})  => {
 }
 
 Shape.defaultProps = {
-  form: 'square', // possible values: 'circle', 'oval' etc
-  shadow: false
+  form: 'square' // possible values: 'circle', 'oval' etc
 };
 
 export default Shape;

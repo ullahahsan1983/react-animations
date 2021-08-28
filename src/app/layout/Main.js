@@ -1,8 +1,9 @@
 import React from "react";
-import ExampleCollection from '../examples/ExampleCollection';
+import { ExampleCollection } from '../examples/ExampleCollection';
+import * as utils from "../../libs/utils";
 
 const Main = (props)  => {  
-  const Example = ExampleCollection[props.example || 'Flip'];
+  const Example = utils.findKeyInTree(ExampleCollection, props.example || 'Effects.Flip');
   return (
     <div className="main">  
       <div className="example-container">

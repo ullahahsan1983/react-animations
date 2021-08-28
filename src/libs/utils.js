@@ -22,10 +22,49 @@ const findChildrenByType = (src, typeName, sequence = 1) => {
   return ensureArray(src).filter(e => e.type && e.type.name === typeName)[sequence - 1];
 }
 
+const keySeparator = ".";
+
+const treeOfKeys = (objTree, prefix = "") => {
+  let keyTree = {};
+  const prefixKey = prefix ? `${prefix}${keySeparator}` : "";
+
+  for(const [key, value] of Object.entries(objTree)) {
+    const fullKey = `${prefixKey}${key}`;
+    if (Object.entries(value).length > 1) {
+      keyTree[fullKey] = treeOfKeys(value, prefixKey + key);
+    }
+    else {
+      keyTree[fullKey] = key;
+    }
+  }
+  
+  return keyTree;
+}
+
+const findKeyInTree = (objTree, key) => {
+  const [prefix, rem] = reduceKeyName(key);
+
+  if (rem && objTree[prefix])
+    return findKeyInTree(objTree[prefix], rem);
+  return objTree[prefix];
+}
+
+const reduceKeyName = (keyName, reverse = false) => {
+  const parts = (keyName + "").split(keySeparator);
+  if (reverse) {
+    return [parts.pop(), parts.join(keySeparator)];
+  }
+
+  return [parts.shift(), parts.join(keySeparator)];
+}
+
 export {
   defineDescendant,
   defineNamedVariant,
   findNamedVariant,
   findChildrenByType,
-  ensureArray
+  ensureArray,
+  treeOfKeys,
+  findKeyInTree,
+  reduceKeyName
 }

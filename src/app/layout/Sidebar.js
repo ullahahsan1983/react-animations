@@ -1,22 +1,19 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import SideNav from "../../libs/widgets/SideNav/SideNav";
-import ExampleCollection from "../examples/ExampleCollection";
+import { getExampleTree } from "../examples/ExampleCollection";
 
-const Sidebar = (props)  => {
-  const items = Object.keys(ExampleCollection).map((key, index) =>
-  {
-    return { navKey: key, caption: `${key}` };
-  });
+const tree = getExampleTree();
 
-  const onNavigate = (idx) => props.onNavigate(items[idx].navKey);
+const Sidebar = ({navigate, ...props})  => {
+  const onNavigate = (seq) => navigate(tree.find(e => e.order == seq).path);
 
   const className = `sidebar ${props.right ? 'right' : 'left'}`;
   return (
     <div className={className}>
       <Card bg="secondary" text="light">
         <Card.Header>Examples</Card.Header>
-        <SideNav items={items} variant="flush" itemVariant="dark" onNavigate={onNavigate}></SideNav>
+        <SideNav items={tree} variant="flush" itemVariant="dark" defaultItem="2" navigate={onNavigate}></SideNav>
       </Card>
     </div>
   );
