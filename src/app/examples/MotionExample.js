@@ -26,7 +26,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Vertical">
-          <Motion direction="vertical" play={playVertical} style={{ height: '250px'}}>
+          <Motion track="vertical" play={playVertical} style={{ height: '250px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
           </Motion>
         </ExampleModule.Item.Demo>
@@ -37,7 +37,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Horizontal">
-          <Motion direction="horizontal" play={playHorizontal} style={{ height: '250px'}}>
+          <Motion track="horizontal" play={playHorizontal} style={{ height: '250px'}}>
             <Image src={Ball} style={{ height: '100px', marginTop: '30px'}} />
           </Motion>
         </ExampleModule.Item.Demo>
@@ -51,7 +51,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Diagonal">
-          <Motion direction="diagonal" play={playDiagonal} style={{ height: '300px'}}>
+          <Motion track="diagonal" play={playDiagonal} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
           </Motion>
         </ExampleModule.Item.Demo>
@@ -62,7 +62,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Orthogonal">
-          <Motion direction="orthogonal" play={playOrthogonal} style={{ height: '300px'}}>
+          <Motion track="orthogonal" play={playOrthogonal} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
           </Motion>
         </ExampleModule.Item.Demo>
@@ -76,7 +76,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Box">
-          <Motion direction="box" play={playBox} style={{ height: '300px'}}>
+          <Motion track="box" play={playBox} style={{ height: '300px'}}>
             <Image src={Ball} style={{ height: '100px'}} />
           </Motion>
         </ExampleModule.Item.Demo>
@@ -89,7 +89,7 @@ const MotionExample = ()  => {
         <ExampleModule.Item.Demo title="Triangle">
           <div className="stacked">
             <span className="shape-triangle" style={{ width: "200px", height: "200px"}}></span>
-            <Motion direction="triangle" play={playTriangle} style={{ height: '300px'}}>
+            <Motion track="triangle" play={playTriangle} style={{ height: '300px'}}>
               <Image src={Ball} style={{ height: '50px', width: '50px' }} />
             </Motion>
           </div>
@@ -106,7 +106,7 @@ const MotionExample = ()  => {
         <ExampleModule.Item.Demo title="Circle">
           <div className="stacked">
             <span className="shape-circle" style={{ width: "200px", height: "200px"}}></span>
-            <Motion direction="circle" play={playCircle} style={{ height: '300px'}}>
+            <Motion track="circle" play={playCircle} style={{ height: '300px'}}>
               <Image src={Ball} style={{ height: '50px', width: '50px' }} />
             </Motion>
           </div>
@@ -120,7 +120,7 @@ const MotionExample = ()  => {
         <ExampleModule.Item.Demo title="Oval">
           <div className="stacked">
             <span className="shape-circle" style={{ width: "200px", height: "100px"}}></span>
-            <Motion direction="oval" play={playOval} style={{ height: '300px'}}>
+            <Motion track="oval" play={playOval} style={{ height: '300px'}}>
               <Image src={Ball} style={{ height: '50px', width: '50px' }} />
             </Motion>
           </div>
@@ -135,7 +135,7 @@ const MotionExample = ()  => {
           </ButtonGroup>
         </ExampleModule.Item.Actions>
         <ExampleModule.Item.Demo title="Box">
-          <Motion direction="slide-blur" play={playSlide} style={{ height: '300px'}}>
+          <Motion track="slide-blur" play={playSlide} style={{ height: '300px'}}>
             <div className="box"></div>
           </Motion>
         </ExampleModule.Item.Demo>

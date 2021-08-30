@@ -193,67 +193,102 @@ $fill-colors: (
   }
 }
 
-.shape-angle-{
-  &orthogonal {
+.shape-angle{
+  &.orthogonal {
     @include free-angle(bottom left, bottom 0, left 0);
   }
-  &bottomleft {
+  &.bottomleft {
     @include free-angle(bottom left, bottom var(--shape-rect-skew-reverse), left 0);
   }
-  &bottomright {
+  &.bottomright {
     @include free-angle(bottom right, bottom var(--shape-rect-skew), right 0);
   }
-  &topright {
+  &.topright {
     @include free-angle(top right, top var(--shape-rect-skew-reverse), right 0);
   }
-  &topleft {
+  &.topleft {
     @include free-angle(top left, top var(--shape-rect-skew), left 0);
   }
-  &leftcenter {
+  &.leftcenter {
     @include free-angle(center center, bottom 0, left "translateY(-25%) translateX(25%) rotate(45deg)");
   }
-  &rightcenter {
+  &.rightcenter {
     @include free-angle(center center, bottom 0, right "translateY(-25%) translateX(-25%) rotate(-45deg)");
   }
-  &topcenter {
+  &.topcenter {
     @include free-angle(center center, top "translateY(35%) rotate(-45deg)", right 0);
   }
-  &bottomcenter {
+  &.bottomcenter {
     @include free-angle(center center, bottom 0, left "translateY(-35%) rotate(-45deg)");
   }
 }
 
-.shape-triangle-{
+.shape-triangle{
+  $base: $triangle-base;
+  $height: $triangle-height;
+  position: relative;
+
+  &.up {
+    //@include free-angle(bottom left, bottom skewX(-27.5deg), left 0);
+    &::after {
+      @extend .pseudo;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      //@include free-angle(bottom right, bottom skewX(42.5deg), right 0);
+    }
+  }
+  &.down {
+    
+  }
+  &.left {
+    
+  }
+  &.right {
+    
+  }  
+  &.topleft {
+    
+  }
+  &.topright {
+    
+  }
+  &.bottomleft {
+    
+  }
+  &.bottomright {
+    
+  }
+}
+
+.shape-triangle-solid{
+  @extend .void-area;
   $base: $triangle-base;
   $height: $triangle-height;
 
-  &up, &down, &left, &right, &topleft, &topright, &bottomleft, &bottomright {
-    &.fill{
-      @extend .void-area;
-    }
-  }
-  &up.fill {
+  &.up {
     @include set-triangle(0, -$base / 2, $height, -$base / 2);
   }
-  &down.fill {
+  &.down {
     @include set-triangle($height, -$base / 2, 0, -$base / 2);
   }
-  &left.fill {
+  &.left {
     @include set-triangle(-$base / 2, $height, -$base / 2, 0);
   }
-  &right.fill {
+  &.right {
     @include set-triangle(-$base / 2, 0, -$base / 2, $height);
   }
-  &topleft.fill {
+  &.topleft {
     @include set-triangle($height, -$base, 0, 0);
   }
-  &topright.fill {
+  &.topright {
     @include set-triangle($height, 0, 0, -$base);
   }
-  &bottomleft.fill {
+  &.bottomleft {
     @include set-triangle(0, -$base, $height, 0);
   }
-  &bottomright.fill {
+  &.bottomright {
     @include set-triangle(0, 0, $height, -$base);
   }
 }
@@ -555,7 +590,7 @@ $star-color: var(--shape-star-color);
 .shape-hexagon {
   $arm: 50px;
   $width: $arm * 1.73;
-  $offset: 0.25px;
+  $offset: 0.4px;
   @extend .void-area;
   position: relative;
 
@@ -589,7 +624,7 @@ $star-color: var(--shape-star-color);
   $arm: 50px;
   $base-gap: $arm * sin(45deg); // arm * sin45
   $width: $base-gap + $arm + $base-gap;
-  $offset: 0.5px;
+  $offset: 0.7px;
 
   position: relative;
   width: $width;
@@ -625,7 +660,7 @@ $star-color: var(--shape-star-color);
   $mid-h: $arm * 0.951; // arm * sin72
   $top-h: $arm * 0.588; // arm * sin36
   $width: $base-gap + $arm + $base-gap;
-  $offset: 0.25px;
+  $offset: 0.5px;
 
   position: relative;
   width: $width;
@@ -654,7 +689,7 @@ $star-color: var(--shape-star-color);
   $mid-gap: $arm * 0.223; //arm * cos(540/7)
   $mid-width: $base-gap + $arm + $base-gap;
   $top-width: $mid-width - $mid-gap - $mid-gap;
-  $offset: 0.7px;
+  $offset: 1.2px;
 
   position: relative;
   width: $mid-width;

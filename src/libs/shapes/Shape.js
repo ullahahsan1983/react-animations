@@ -1,5 +1,6 @@
 import React from "react";
 import '../shapes.scss';
+import * as utils from "../utils";
 
 const CompositeShape = ({children, ...props}) => {
   return (
@@ -10,7 +11,7 @@ const CompositeShape = ({children, ...props}) => {
 }
 
 const Shape = ({children, shadow, ...props})  => {
-  const className = `shape shape-${props.form} ${children ? 'shape-composite': ''} ${shadow ? 'shadowy': ''}`;
+  const className = utils.classJoin(`shape shape-${props.form} ${children ? 'shape-composite': ''} ${shadow ? 'shadowy': ''}`);
 
   return (
     <figure>

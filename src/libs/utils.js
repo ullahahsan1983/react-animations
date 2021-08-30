@@ -11,7 +11,7 @@ const defineNamedVariant = (fn, name) => {
 
 const ensureArray = (arr) => {
   // ensure array. TODO: low effort, need to improve
-  return !arr ? [] : (arr.length > 1 ? arr : [arr]);
+  return !arr ? [] : (typeof arr != "string" && arr.length > 1 ? arr : [arr]);
 }
 
 const findNamedVariant = (src, name) => {
@@ -58,6 +58,25 @@ const reduceKeyName = (keyName, reverse = false) => {
   return [parts.shift(), parts.join(keySeparator)];
 }
 
+const classJoin = (classes) => {
+  const arr = ensureArray(classes);
+  
+  let classList = [];
+  for(const i in arr) {
+    const parts = arr[i].split(" ");
+    
+    for(const j in parts)
+    {
+      const item = parts[j];
+      if(item.trim() == "" || classList.indexOf(item) > -1)
+        continue;
+      classList.push(item);
+    }
+  }
+  
+  return classList.join(" ");
+}
+
 export {
   defineDescendant,
   defineNamedVariant,
@@ -66,5 +85,6 @@ export {
   ensureArray,
   treeOfKeys,
   findKeyInTree,
-  reduceKeyName
+  reduceKeyName,
+  classJoin,
 }

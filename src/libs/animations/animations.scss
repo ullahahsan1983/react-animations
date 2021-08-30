@@ -5,11 +5,11 @@
   align-items: center;
 }
 
-.motion.paused {
+.motion-paused {
   animation-play-state: paused;
 }
 
-.motion.running.vertical {
+.motion-running.vertical {
   animation: vertical linear 1s infinite  alternate;
 }
 
@@ -18,7 +18,7 @@
   100% { transform: translateY(75px); }
 }
 
-.motion.running.horizontal {
+.motion-running.horizontal {
   animation: horizontal linear 1.8s infinite  alternate;
 }
 
@@ -27,7 +27,7 @@
   100% { transform: translateX(-260px); }
 }
 
-.motion.running.diagonal {
+.motion-running.diagonal {
   animation: diagonal linear 2s infinite  alternate;
 }
 
@@ -36,7 +36,7 @@
   100% { transform: translateX(260px) translateY(100px); }
 }
 
-.motion.running.orthogonal {
+.motion-running.orthogonal {
   animation: orthogonal linear 2.5s infinite  alternate;
 }
 @keyframes orthogonal {
@@ -45,7 +45,7 @@
   100% { transform: translateX(220px) translateY(100px); }
 }
 
-.motion.running.box {
+.motion-running.box {
   animation: box linear 5s infinite normal;
 }
 
@@ -57,7 +57,7 @@
   100% { transform: translateX(260px) translateY(100px); }
 }
 
-.motion.running.circle {
+.motion-running.circle {
   animation: circle linear 5s infinite;
   animation-fill-mode: forwards;
 }
@@ -67,7 +67,7 @@
   100% { transform: rotate(360deg) translate(-100px) rotate(-360deg); }
 }
 
-.motion.running.oval {
+.motion-running.oval {
   animation: oval linear 5s infinite;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .motion.slide-blur {
-  $size: 50px;
+  $size: 70px;
   $speed: 1.5s;
   $color: lightgreen;
   position: relative;
@@ -91,39 +91,34 @@
     position: absolute;
     left: calc(50% - #{$size / 2});
     width: $size;
-    height: 100%;
-    background: $color;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      width: $size * 2;
-      height: 100%;
-      transform-origin: 0 0;
-    }
-    
-    &::after {
-      content: '';
-      position: absolute;
-      left: -$size;
-      width: $size * 2;
-      height: 100%;
-      transform-origin: 100% 0%;
-    }
+    height: $size;
+    background: $color;    
   }
 
-  &.running {
+  &.motion-running {
     animation: slide $speed cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate;
 
     .box {      
       animation: slide $speed cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite alternate; 
       &::before {
+        content: '';
+        position: absolute;      
+        height: 100%;
+        width: $size * 2;
+        left: 0;
         background: linear-gradient(90deg, rgba($color, 0.5) 50%, rgba($color, 0) 100%);
         animation: scale $speed * 2 cubic-bezier(0.445, 0.050, 0.550, 0.950) -$speed infinite;
+        transform-origin: 0 0;
       }   
       &::after {
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: $size * 2;
+        left: -$size;
         background: linear-gradient(90deg, rgba($color, 0) 0%, rgba($color, 0.5) 50%);
         animation: scale $speed * 2 cubic-bezier(0.445, 0.050, 0.550, 0.950) infinite;
+        transform-origin: 100% 0%;
       }
     }
   }

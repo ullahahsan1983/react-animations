@@ -16,19 +16,19 @@ const PureCssShapesExample = ()  => {
 
       <ExampleModule.Item title="Directions" className="arrows">
         <ExampleModule.Item.Demo>
-          <Shape form="triangle-up fill" title="Up" />
-          <Shape form="triangle-down fill" title="Down" />
-          <Shape form="triangle-left fill" title="Left" />
-          <Shape form="triangle-right fill" title="Right" />
+          <Shape form="triangle-solid up" title="Up" />
+          <Shape form="triangle-solid down" title="Down" />
+          <Shape form="triangle-solid left" title="Left" />
+          <Shape form="triangle-solid right" title="Right" />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>    
 
       <ExampleModule.Item title="Sharp Corners" className="arrows">
         <ExampleModule.Item.Demo>
-          <Shape form="triangle-topleft fill" title="Top Left" />
-          <Shape form="triangle-topright fill" title="Top Right" />
-          <Shape form="triangle-bottomleft fill" title="Bottom Left" />
-          <Shape form="triangle-bottomright fill" title="Bottom Right" />
+          <Shape form="triangle-solid topleft fill" title="Top Left" />
+          <Shape form="triangle-solid topright fill" title="Top Right" />
+          <Shape form="triangle-solid bottomleft fill" title="Bottom Left" />
+          <Shape form="triangle-solid bottomright fill" title="Bottom Right" />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item> 
       

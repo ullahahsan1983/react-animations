@@ -3,7 +3,7 @@ import { ExampleCollection } from '../examples/ExampleCollection';
 import * as utils from "../../libs/utils";
 
 const Main = (props)  => {  
-  const Example = utils.findKeyInTree(ExampleCollection, props.example || 'Effects.Flip');
+  const Example = utils.findKeyInTree(ExampleCollection, props.example || 'Shapes.Simple Shapes');
   return (
     <div className="main">  
       <div className="example-container">

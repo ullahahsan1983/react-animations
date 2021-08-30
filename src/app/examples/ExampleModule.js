@@ -2,7 +2,7 @@ import React from "react";
 import * as utils from "../../libs/utils";
 import { Row, Col, Card } from "react-bootstrap";
 import WorkInProgress from "../../favorites/WorkInProgress/WorkInProgress";
-import SplitPanel from "../../libs/widgets/SplitPanel/SplitPanel";
+import OSplitPanel from "../../libs/widgets/SplitPanel/OSplitPanel";
 
 const Demonstration = (props) => {
   return (
@@ -40,42 +40,45 @@ const ExampleItem = ({children, className, ...props}) => {
   {
     case 'compare':
       template = 
-      <SplitPanel className={panelClassName}>
-        <SplitPanel.Left className="demo-content">
+      <OSplitPanel className={panelClassName}>
+        <OSplitPanel.Left className="demo-content">
           {demo1.props && demo1.props.title &&
-            <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
+            <OSplitPanel.SectionTitle>{demo1.props.title}</OSplitPanel.SectionTitle>
           }
           {demo1}            
-        </SplitPanel.Left>
-        <SplitPanel.Right className="demo-content">
+        </OSplitPanel.Left>
+        <OSplitPanel.Right className="demo-content">
           {demo2.props && demo2.props.title &&
-            <SplitPanel.SectionTitle>{demo2.props.title}</SplitPanel.SectionTitle>
+            <OSplitPanel.SectionTitle>{demo2.props.title}</OSplitPanel.SectionTitle>
           }
           {demo2}
-        </SplitPanel.Right>
-      </SplitPanel>;
+        </OSplitPanel.Right>
+      </OSplitPanel>;
       break;
     case 'tryit':
       template = 
-      <SplitPanel className={panelClassName}>
-        <SplitPanel.Left className="demo-content">
+      <OSplitPanel className={panelClassName}>
+        <OSplitPanel.Left className="demo-content">
           {demo1.props && demo1.props.title &&
-            <SplitPanel.SectionTitle>{demo1.props.title}</SplitPanel.SectionTitle>
+            <OSplitPanel.SectionTitle>{demo1.props.title}</OSplitPanel.SectionTitle>
           }
           {demo1 || <div>No content provided</div>}            
-        </SplitPanel.Left>
-        <SplitPanel.Right className="tryit">
+        </OSplitPanel.Left>
+        <OSplitPanel.Right className="tryit">
           {tryIt.props && tryIt.props.title &&
-            <SplitPanel.SectionTitle>{tryIt.props.title}</SplitPanel.SectionTitle>
+            <OSplitPanel.SectionTitle>{tryIt.props.title}</OSplitPanel.SectionTitle>
           }
           {tryIt || <WorkInProgress />}
-        </SplitPanel.Right>
-      </SplitPanel>;
+        </OSplitPanel.Right>
+      </OSplitPanel>;
       break;
     case 'single':
     default:
       panelClassName += " demo-content";
-      template = <SplitPanel className={panelClassName}>{demo1}</SplitPanel>;
+      template = 
+      <OSplitPanel className={panelClassName}>
+        {demo1}
+      </OSplitPanel>;
       break;    
   }
 

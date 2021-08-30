@@ -2,7 +2,7 @@ import React from "react";
 import '../animations.scss';
 
 const Motion = ({className, style, children, ...props})  => {
-  const classState = `motion ${props.play ? 'running' : 'paused'} ${props.direction} ${className ? className : ''}`;
+  const classState = `motion ${props.play ? 'motion-running' : 'motion-paused'} ${props.track} ${className ? className : ''}`;
 
   return (
     <div className={classState} style={style}>
@@ -13,7 +13,7 @@ const Motion = ({className, style, children, ...props})  => {
 
 Motion.defaultProps = {
   play: true,
-  direction: 'vertical', // possible values: 'vertical', 'horizontal', 'diagonal', 'orthogonal', 'box', 'circle'
+  track: 'vertical', // possible values: 'vertical', 'horizontal', 'diagonal', 'orthogonal', 'box', 'circle'
 };
 
 export default Motion;

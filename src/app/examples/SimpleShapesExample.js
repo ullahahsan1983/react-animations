@@ -7,38 +7,38 @@ const SimpleShapesExample = ()  => {
     <ExampleModule className="demo-shapes" description="Shapes rendered by classic css transormations e.g. transform/translate/rotate/skew">
       <ExampleModule.Item title="Corner Angles">
         <ExampleModule.Item.Demo>
-          <Shape form="angle-orthogonal" title="Right Angle" style={{width: "150px", height: "180px"}} />
-          <Shape form="angle-bottomleft" title="Bottom Left" style={{width: "150px", height: "180px"}} />
-          <Shape form="angle-bottomright" title="Bottom Right" style={{width: "150px", height: "180px"}} />
-          <Shape form="angle-topright" title="Top Right" style={{width: "150px", height: "180px"}} />
-          <Shape form="angle-topleft" title="Top Left" style={{width: "150px", height: "180px"}} />
+          <Shape form="angle orthogonal" title="Right Angle" style={{width: "150px", height: "180px"}} />
+          <Shape form="angle bottomleft" title="Bottom Left" style={{width: "150px", height: "180px"}} />
+          <Shape form="angle bottomright" title="Bottom Right" style={{width: "150px", height: "180px"}} />
+          <Shape form="angle topright" title="Top Right" style={{width: "150px", height: "180px"}} />
+          <Shape form="angle topleft" title="Top Left" style={{width: "150px", height: "180px"}} />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>  
 
       <ExampleModule.Item title="Arrow Angles">
         <ExampleModule.Item.Demo>
-          <Shape form="angle-leftcenter" title="Left Center" style={{width: "120px", height: "120px"}} />
-          <Shape form="angle-rightcenter" title="Right Center" style={{width: "120px", height: "120px"}} />
-          <Shape form="angle-topcenter" title="Top Center" style={{width: "120px", height: "120px"}} />
-          <Shape form="angle-bottomcenter" title="Bottom Center" style={{width: "120px", height: "120px"}} />
+          <Shape form="angle leftcenter" title="Left Center" style={{width: "120px", height: "120px"}} />
+          <Shape form="angle rightcenter" title="Right Center" style={{width: "120px", height: "120px"}} />
+          <Shape form="angle topcenter" title="Top Center" style={{width: "120px", height: "120px"}} />
+          <Shape form="angle bottomcenter" title="Bottom Center" style={{width: "120px", height: "120px"}} />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item> 
 
       <ExampleModule.Item title="Triangles">
         <ExampleModule.Item.Demo>
-          <Shape form="triangle-up" title="Up" />
-          <Shape form="triangle-down" title="Down" />
-          <Shape form="triangle-left" title="Left" />
-          <Shape form="triangle-right" title="Right" />
+          <Shape form="triangle up" title="Up" style={{width: "120px", height: "120px"}} />
+          <Shape form="triangle down" title="Down" style={{width: "120px", height: "120px"}} />
+          <Shape form="triangle left" title="Left" style={{width: "120px", height: "120px"}} />
+          <Shape form="triangle right" title="Right" style={{width: "120px", height: "120px"}} />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item>    
 
       <ExampleModule.Item title="Orthogonal Triangles">
         <ExampleModule.Item.Demo>
-          <Shape form="triangle-topleft" title="Top Left" />
-          <Shape form="triangle-topright" title="Top Right" />
-          <Shape form="triangle-bottomleft" title="Bottom Left" />
-          <Shape form="triangle-bottomright" title="Bottom Right" />
+          <Shape form="triangle topleft" title="Top Left" style={{width: "120px", height: "120px"}}/>
+          <Shape form="triangle topright" title="Top Right" style={{width: "120px", height: "120px"}} />
+          <Shape form="triangle bottomleft" title="Bottom Left" style={{width: "120px", height: "120px"}} />
+          <Shape form="triangle bottomright" title="Bottom Right" style={{width: "120px", height: "120px"}} />
         </ExampleModule.Item.Demo>
       </ExampleModule.Item> 
       

@@ -5,8 +5,14 @@ import MotionExample from "./MotionExample";
 import PopInExample from "./PopInExample";
 import SimpleShapesExample from "./SimpleShapesExample";
 import CompositeShapesExample from "./CompositeShapesExample";
+import CarouselExample from "./CarouselExample";
 
 const ExampleCollection = {
+  'Shapes': {
+    'Simple Shapes': SimpleShapesExample,
+    'Pure CSS Shapes': PureCssShapesExample,
+    'Composite Shapes': CompositeShapesExample,
+  },
   'Effects': {
     'Flip': FlipExample,
     'Slide': WorkInProgress,
@@ -15,10 +21,8 @@ const ExampleCollection = {
   'Animations': {
     'Motion': MotionExample,
   },
-  'Shapes': {
-    'Simple Shapes': SimpleShapesExample,
-    'Pure CSS Shapes': PureCssShapesExample,
-    'Composite Shapes': CompositeShapesExample,
+  '3D': {
+    'Carousel': CarouselExample,
   }
 };
 
