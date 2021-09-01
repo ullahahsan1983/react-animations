@@ -109,3 +109,10 @@ footer {
   align-items: center;
   padding-top: 0;
 }
+
+.demo-carousel .ocarousel-slot {
+  font-size: 80px;
+  color: black;
+  text-align: center;
+  line-height: 100%;
+}
