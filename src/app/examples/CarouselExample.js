@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Button, ButtonGroup, Image } from "react-bootstrap";
 import Male from "./images/male-avatar.png";
 import Female from "./images/female-avatar.png";
@@ -22,7 +22,7 @@ const CarouselExample = ()  => {
 
       <ExampleModule.Item title="Auto Mode" description="Carousel which rotates automatically after a certain interval">
         <ExampleModule.Item.Demo>
-          <OCarousel navigator={OCarouselNavigatorMode.Auto} >
+          <OCarousel navigator={OCarouselNavigatorMode.Auto} frame="rounded">
             {slots}
           </OCarousel>
         </ExampleModule.Item.Demo>
@@ -30,7 +30,7 @@ const CarouselExample = ()  => {
 
       <ExampleModule.Item title="Dual Mode" description="Carousel which can run in both auto and manual operation mode">
         <ExampleModule.Item.Demo>
-          <OCarousel navigator={OCarouselNavigatorMode.Both} >
+          <OCarousel navigator={OCarouselNavigatorMode.Both} slotGap="0" >
             {slots}
           </OCarousel>
         </ExampleModule.Item.Demo>
@@ -38,7 +38,7 @@ const CarouselExample = ()  => {
 
       <ExampleModule.Item title="Custom Controlled" description="Carousel which can run in custom operation mode using in-built navigator api">
         <ExampleModule.Item.Demo>
-          <OCarousel ref={carouselRef} navigator={OCarouselNavigatorMode.None} >
+          <OCarousel ref={carouselRef} navigator={OCarouselNavigatorMode.None} frame="circle">
             {slots}
           </OCarousel>
 
@@ -53,7 +53,7 @@ const CarouselExample = ()  => {
 
       <ExampleModule.Item title="Many Slots" description="Carousel with many slots">
         <ExampleModule.Item.Demo>
-          <OCarousel navigator={OCarouselNavigatorMode.Both} >
+          <OCarousel navigator={OCarouselNavigatorMode.Both + " off"} slotWidth="180px" slotHeight="120px" slotGap="10px" frame="rounded">
             {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map((number) => (
               <React.Fragment key={number}>{number}</React.Fragment>
             ))}
@@ -63,10 +63,10 @@ const CarouselExample = ()  => {
 
       <ExampleModule.Item title="Many Slots" description="Carousel with images">
         <ExampleModule.Item.Demo>
-          <OCarousel navigator={OCarouselNavigatorMode.Auto} slotWidth="180px" slotHeight="120px">
+          <OCarousel navigator={OCarouselNavigatorMode.Both + " off"} variant="vertical" slotWidth="180px" slotHeight="120px" frame="rounded">
             {[1,2,3,4,5,6,7,8,9,10].map((number) => (
               <React.Fragment key={number}>
-                <Image thumbnail src={ number%2 == 0 ? Male : Female } width="115px" />
+                <Image thumbnail src={ number%2 === 0 ? Male : Female } width="115px" />
               </React.Fragment>
             ))}
           </OCarousel>

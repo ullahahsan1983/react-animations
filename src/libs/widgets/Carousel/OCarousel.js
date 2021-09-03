@@ -1,6 +1,7 @@
-import React, { forwardRef, useState, useImperativeHandle, useEffect } from "react";
+import React, { useState, useImperativeHandle } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import * as utils from "../../utils";
+import { useInterval } from "../../hooks";
 import OToggleSwitch from "../ToggleSwitch/OToggleSwitch";
 import "./ocarousel.scss";
 
@@ -16,26 +17,23 @@ const OCarouselOrientation = {
   Vertical: "vertical"
 }
 
-const OCarouselNavigator = ({ onBackward, onForward, mode, orientation }) => {  
-  const [duration, setDuration] = useState(0);
-  const [run, setRun] = useState(mode == OCarouselNavigatorMode.Auto);
+const OCarouselNavigator = ({ 
+  onBackward, 
+  onForward, 
+  mode, 
+  off,
+  orientation 
+}) => {  
+  const [run, setRun] = useState(mode === OCarouselNavigatorMode.Auto && !off);
 
-  useEffect(() => {
-    if (mode != OCarouselNavigatorMode.Auto || !run)
-    {
-      setDuration(0);
-      return false;
-    }
-    const timer = setTimeout(() => {
-      onForward(1);
-      setDuration(duration + 1);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [duration, run, mode]);
+  useInterval(() =>
+  {
+    onForward(1);
+  }, run ? 2000 : null);
 
   return (
     <div className="ocarousel-navigator">
-    {(mode == OCarouselNavigatorMode.Manual) && 
+    {(mode === OCarouselNavigatorMode.Manual) && 
       <ButtonGroup aria-label="Previous/Next">
         <Button variant="secondary" onClick={() => onBackward(Number.MAX_VALUE)} title="First">|&lt;</Button>
         <Button variant="secondary" onClick={() => onBackward(1)} title="Previous">&lt;</Button>
@@ -43,7 +41,7 @@ const OCarouselNavigator = ({ onBackward, onForward, mode, orientation }) => {
         <Button variant="secondary" onClick={() => onForward(Number.MAX_VALUE)} title="Last">&gt;|</Button>
       </ButtonGroup>
     }
-    {(mode == OCarouselNavigatorMode.Auto) && 
+    {(mode === OCarouselNavigatorMode.Auto) && 
       <OToggleSwitch onSwitch={(on) => setRun(on)} initialState={run} labelOn="Auto" labelOff="Paused" style={{width: "90px"}} />
     }
     </div>
@@ -52,41 +50,64 @@ const OCarouselNavigator = ({ onBackward, onForward, mode, orientation }) => {
 
 OCarouselNavigator.defaultProps = {
   mode: OCarouselNavigatorMode.Manual, 
-  orientation: OCarouselOrientation.Horizontal
+  orientation: OCarouselOrientation.Horizontal,
+  off: false, // Used only in auto mode 
 };
 
-class OCarouselDynamicsXZ {
-  constructor(slotCount, spaceWidth){
-    this.slotCount = slotCount;
-    this.spaceWidth = spaceWidth;
+class OCarouselDynamics {
+  constructor(
+    slotCount, 
+    slotGap,
+    slot3dOffset, 
+    slotWidth, 
+    slotHeight, 
+    plane = 'xz'
+  ){
+    this._slotCount = slotCount;
+    this._slotGap = slotGap;
+    this._slotWidth = slotWidth;
+    this._slotHeight = slotHeight;
+    this._slot3dOffset = slot3dOffset;
+    this._plane = plane;
 
-    this.distZ = Math.round(( spaceWidth / 2 ) /  Math.tan(Math.PI / slotCount));
-    this.rotationY = 360 / slotCount;
+    this._spaceWidth = Number.parseInt(slotWidth) + Number.parseInt(slotGap);
+    this._spaceHeight = Number.parseInt(slotHeight) + Number.parseInt(slot3dOffset);
+    this._rotateFn = plane === 'xy' ? 'rotateZ' : (plane === 'yz' ? 'rotateX' : 'rotateY');
+    this._translateFn = plane === 'xy' ? 'translateX' : (plane === 'yz' ? 'translateZ' : 'translateZ');
+
+    this._translationDist = Math.round(( this._spaceWidth / 2 ) /  Math.tan(Math.PI / slotCount));
+    this._rotationUnit = 360 / slotCount;
   }
 
-  getDistanceZ = () => this.distZ;
+  getSpaceWidth = () => this._spaceWidth + 'px';
 
-  getRotationY = () => this.rotationY;
+  getSpaceHeight = () => this._spaceHeight + 'px';
 
-  initialSlotTransform = (slotNo) => `rotateY(${this.rotationY * (slotNo - 1)}deg) translateZ(${this.distZ}px)`;
+  getTranslationDist = () => this._translationDist;
 
-  calculateRelativeRotation = (slotPosition, slotCountInGap) => (slotPosition + slotCountInGap - 1) / this.slotCount * -360;
+  getRotationAngle = () => this._rotationUnit;
+
+  initialSpaceTransform = () => `${this._translateFn}(-${this._translationDist}px)`;
+
+  initialSlotTransform = (slotNo) => `${this._rotateFn}(${this._rotationUnit * (slotNo - 1)}deg) ${this._translateFn}(${this._translationDist}px)`;
+
+  calculateRelativeRotation = (slotPosition, slotCountInGap) => (slotPosition + slotCountInGap - 1) / this._slotCount * -360;
 
   calculateRelativeTransform(slotPosition, slotCountInGap) {
     const deg = this.calculateRelativeRotation(slotPosition, slotCountInGap);
-    return `translateZ(-${this.distZ}px) rotateY(${deg}deg)`;
+    return `${this._translateFn}(-${this._translationDist}px) ${this._rotateFn}(${deg}deg)`;
   };
 
   calculateClosestGap(slotPosition, destinationSlotNo) {
-    const currentSlotNo = slotPosition % this.slotCount;
+    const currentSlotNo = slotPosition % this._slotCount;
     let targetAhead, targetBehind, distAhead, distBehind = 0;
 
     targetAhead = slotPosition + destinationSlotNo - currentSlotNo;
     if (targetAhead > slotPosition)
-      targetBehind = targetAhead - this.slotCount;
+      targetBehind = targetAhead - this._slotCount;
     else {
       targetBehind = targetAhead;
-      targetAhead = targetBehind + this.slotCount;
+      targetAhead = targetBehind + this._slotCount;
     }
 
     distAhead = targetAhead - slotPosition;
@@ -94,31 +115,36 @@ class OCarouselDynamicsXZ {
         
     return (distAhead <= distBehind) ? distAhead : (0 - distBehind);
   };
-
 }
 
 const OCarousel = React.forwardRef(({
   children, 
   navigator, 
   variant, 
-  noframe,
+  frame,
   slotGap,
   slot3dOffset, 
   slotWidth, 
   slotHeight, 
   ...props
 }, ref) => {
-    const rootClass = utils.classJoin(`ocarousel ocarousel-${variant} ${noframe ? '' : 'frame'}`);
-    const orientation = variant == OCarouselOrientation.Vertical ? variant : OCarouselOrientation.Horizontal;
+    const rootClass = utils.classJoin(`${props.className || ''} ocarousel ocarousel-${variant} ${(!frame || frame === "none") ? '' : ("frame frame-" + frame)}`);
+    const orientation = (variant === OCarouselOrientation.Vertical) ? variant : OCarouselOrientation.Horizontal;
+    const slotCount = (children && children.length) || 1;
 
-    const spaceWidth = Number.parseInt(slotWidth) + Number.parseInt(slotGap);
-    const spaceHeight = Number.parseInt(slotHeight) + Number.parseInt(slot3dOffset);
-
-    const dynamics = new OCarouselDynamicsXZ(children && children.length || 1, spaceWidth);
+    const dynamics = new OCarouselDynamics(
+      slotCount, 
+      slotGap,
+      slot3dOffset,
+      slotWidth,
+      slotHeight, 
+      variant === OCarouselOrientation.Vertical ? 'yz' : 'xz'
+    );
 
     // Navigator setup
-    const allowManual = navigator == OCarouselNavigatorMode.Manual || navigator == OCarouselNavigatorMode.Both;
-    const allowAuto = navigator == OCarouselNavigatorMode.Auto || navigator == OCarouselNavigatorMode.Both; 
+    const navigatorOpts = navigator.split(" ");
+    const allowManual = navigatorOpts.some(e => e === OCarouselNavigatorMode.Manual);
+    const allowAuto = navigatorOpts.some(e => e === OCarouselNavigatorMode.Auto); 
     const manualNavigator = allowManual ? { 
       mode: OCarouselNavigatorMode.Manual,
       orientation: orientation
@@ -126,14 +152,13 @@ const OCarousel = React.forwardRef(({
 
     const autoNavigator = allowAuto ? { 
       mode: OCarouselNavigatorMode.Auto,
-      orientation: orientation
+      orientation: orientation,
+      off: navigatorOpts.some(e => e === "off")
     } : null;
 
-    // 3D space calculation
-    const slotCount = children && children.length || 1;
-    
+    // States    
     const [position, setPosition] = useState(1);
-    const [transform, setTransform] = useState(`translateZ(-${dynamics.getDistanceZ()}px)`);
+    const [transform, setTransform] = useState(dynamics.initialSpaceTransform);
 
     // Rotate functions
     const rotateBy = (slotCountInGap) => {
@@ -147,15 +172,15 @@ const OCarousel = React.forwardRef(({
 
     const moveFirst = () => rotateNearest(1);
     const moveLast = () => rotateNearest(slotCount);
-    const moveBack = (step = 1) => step == Number.MAX_VALUE ? moveFirst() : rotateBy(0 - step);
-    const moveNext = (step = 1) => step == Number.MAX_VALUE ? moveLast() : rotateBy(step);
+    const moveBack = (step = 1) => step === Number.MAX_VALUE ? moveFirst() : rotateBy(0 - step);
+    const moveNext = (step = 1) => step === Number.MAX_VALUE ? moveLast() : rotateBy(step);
 
     useImperativeHandle(ref, () => ({
       first: moveFirst,
       prev: moveBack,
       next: moveNext,
       last: moveLast,
-    }), [position, transform]);
+    }));
 
     const slots = children.map((item, idx) => (
       <div className="ocarousel-slot" key={idx} 
@@ -164,11 +189,11 @@ const OCarousel = React.forwardRef(({
         {item}
       </div>
     ));
-    
+
     return (
-      <div className={rootClass} style={{width: `${spaceWidth}px`}}>
+      <div className={rootClass}>
         {autoNavigator && <OCarouselNavigator {...autoNavigator} onBackward={moveBack} onForward={moveNext} />}
-        <div className="ocarousel-inner" style={{ transform: transform, height: `${spaceHeight}px` }}>
+        <div className="ocarousel-inner" style={{ transform: transform, height: dynamics.getSpaceHeight(), width: dynamics.getSpaceWidth() }}>
           {slots}
         </div>
         {manualNavigator && <OCarouselNavigator {...manualNavigator} onBackward={moveBack} onForward={moveNext} />}
@@ -183,7 +208,7 @@ OCarousel.defaultProps = {
   slot3dOffset: "20px",
   slotWidth: "190px",
   slotHeight: "120px",
-  noframe: false
+  frame: "square", //false, "none", "square", "rounded", "circle"
 }
 
 export {

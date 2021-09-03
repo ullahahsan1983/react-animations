@@ -6,7 +6,7 @@ import { getExampleTree } from "../examples/ExampleCollection";
 const tree = getExampleTree();
 
 const Sidebar = ({navigate, ...props})  => {
-  const onNavigate = (seq) => navigate(tree.find(e => e.order == seq).path);
+  const onNavigate = (seq) => navigate(tree.find(e => e.order === seq).path);
 
   const className = `sidebar ${props.right ? 'right' : 'left'}`;
   return (

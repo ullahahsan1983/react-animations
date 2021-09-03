@@ -23,7 +23,34 @@
 $color-slots: (1,2,3,4,5,6,7,8,9);
 @each $no in $color-slots {
   .ocarousel.frame .ocarousel-slot:nth-child(9n+#{$no}) { 
-    background: hsla(($no + 2) * 40, 80%, 80%, 0.8);
-    border: 2px solid black;
+    background: hsla(($no + 2) * 40, 80%, 80%, 0.8);    
   }
+}
+
+.ocarousel.frame-square .ocarousel-slot {
+  border: 1px solid black;
+}
+
+.ocarousel.frame-rounded .ocarousel-slot {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.ocarousel.frame-circle .ocarousel-slot {
+  border: 1px solid black;
+  border-radius: 50% 50% 50% 50%;
+}
+
+.ocarousel-vertical {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  padding-top: 20px;
+  padding-left: 60px;
+}
+
+.ocarousel-vertical .ocarousel-navigator {
+  transform: rotateZ(-90deg);
 }

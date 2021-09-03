@@ -68,7 +68,7 @@ const classJoin = (classes) => {
     for(const j in parts)
     {
       const item = parts[j];
-      if(item.trim() == "" || classList.indexOf(item) > -1)
+      if(item.trim() === "" || classList.indexOf(item) > -1)
         continue;
       classList.push(item);
     }

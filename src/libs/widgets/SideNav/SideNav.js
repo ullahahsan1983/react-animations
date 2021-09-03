@@ -22,11 +22,11 @@ const SideNav = ({items, variant, itemVariant, defaultItem, navigate, ...props})
       );
     } else if (header) {
       const childs = items
-        .filter(e => e.groupName == groupName && !e.header)
+        .filter(e => e.groupName === groupName && !e.header)
         .map((value, idx) => 
         {
           const { groupName: group, order: sequence, ...child} = value;
-          if (sequence == defaultItem) {
+          if (sequence === defaultItem) {
             defaultAccordionKey = order;
           }
           return (
